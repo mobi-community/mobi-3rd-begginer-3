@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+
+		@apply text-black;
+		@apply text-3xl;
+		@apply font-normal;
+	}
+	html {
+		font-size: 62.5%;
+		@apply bg-white;
+	}
+	h1 {
+		@apply text-6xl;
+		@apply font-bold;
+	}
+	h2 {
+		@apply text-5xl;
+		@apply font-bold;
+	}
+	h3 {
+		@apply text-4xl;
+		@apply font-bold;
+	}
+	h4 {
+		@apply text-3xl;
+		@apply font-bold;
+	}
+	button {
+		border: none;
+	}
+	input {
+		outline: none;
+	}
+	ul,
+	li {
+		list-style: none;
+	}
+}
