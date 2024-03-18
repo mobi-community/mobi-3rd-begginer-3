@@ -15,9 +15,14 @@ const BIRTH = {
     value: /^\d{4}-\d{2}-\d{2}$/,
     message: "형식이 다릅니다.",
 };
+const COMMENT = {
+    value: /^.{100,300}$/,
+    message: "100자 이상 300자 이내로 작성해주세요.",
+};
 export const VALIDATION = {
     ID,
     PASSWORD,
     PHONE_NUMBER,
     BIRTH,
+    COMMENT,
 };
