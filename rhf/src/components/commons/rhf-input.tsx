@@ -1,12 +1,11 @@
 import {tailwindMerge} from '@/utils'
 import type {IconProp} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import type {InputHTMLAttributes} from 'react'
+import {forwardRef, type InputHTMLAttributes} from 'react'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	scale: keyof typeof SizeVariants
 	icon?: IconProp
-	onClickIcon?: VoidFunction
 }
 
 const SizeVariants = {
@@ -15,21 +14,22 @@ const SizeVariants = {
 	full: 'w-full',
 }
 
-export const Input = ({scale, icon, onClickIcon, ...rest}: InputProps) => {
-	return (
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+	({scale, icon, ...rest}, ref) => (
 		<div
 			className={tailwindMerge(
 				SizeVariants[scale],
-				'h-28 grid grid-rows-[2fr_1fr] items-center',
+				'flex items-center gap-2 h-12 p-1 border-2 rounded-sm text-gray-500 border-gray-500 focus-within:border-green-500',
 			)}
 		>
-			<div className='flex items-center w-full h-fit p-1 rounded-md border border-sky-500 focus-within:border-sky-700 focus-within:'>
-				<input className='w-full h-full' {...rest} />
-				{icon && <FontAwesomeIcon {...{icon}} onClick={onClickIcon} />}
-			</div>
-			<div className='w-full'>
-				<p className='text-ti text-red-600'>이것은 에러여</p>
-			</div>
+			{icon && (
+				<FontAwesomeIcon {...{icon}} size='sm' className='text-inherit' />
+			)}
+			<input
+				className='w-full h-full placeholder:text-gray-700 text-inherit'
+				{...{ref}}
+				{...rest}
+			/>
 		</div>
-	)
-}
+	),
+)
