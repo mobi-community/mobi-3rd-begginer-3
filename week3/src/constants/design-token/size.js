@@ -13,10 +13,35 @@ export const sizes = {
             height: "65px",
         },
     },
-};
-export const fontSize = {
-    default: "16px",
-    small: "12px",
-    medium: "24px",
-    large: "36px",
+    input: {
+        small: {
+            padding: "8px 12px",
+        },
+        medium: {
+            padding: "12px 16px",
+        },
+        large: {
+            padding: "16px 20px",
+        },
+    },
+    fontSize: {
+        default: "16px",
+        small: "12px",
+        medium: "24px",
+        large: "36px",
+    },
+    textarea: {
+        smail: {
+            width: "100px",
+            height: "100px",
+        },
+        medium: {
+            width: "100px",
+            height: "200px",
+        },
+        large: {
+            width: "100px",
+            height: "300px",
+        },
+    },
 };

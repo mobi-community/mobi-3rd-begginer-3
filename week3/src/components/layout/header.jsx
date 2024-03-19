@@ -7,7 +7,12 @@ const Header = () => {
     const navigate = useNavigate();
     const [isDisabled, setIsDisabled] = useState(false);
 
-    const onNavigate = () => {
+    const onRHFNavigate = () => {
+        setIsDisabled(true);
+        navigate("/signup");
+    };
+
+    const onYUPNavigate = () => {
         setIsDisabled(true);
         navigate("/signup");
     };
@@ -22,10 +27,18 @@ const Header = () => {
                 <CustomButton
                     theme={"deepDark"}
                     size={"small"}
-                    onClick={onNavigate}
+                    onClick={onRHFNavigate}
                     disable={isDisabled}
                 >
-                    회원가입
+                    RHF 회원가입
+                </CustomButton>
+                <CustomButton
+                    theme={"deepDark"}
+                    size={"small"}
+                    onClick={onYUPNavigate}
+                    disable={isDisabled}
+                >
+                    YUP 회원가입
                 </CustomButton>
             </SignBox>
         </Wrapper>

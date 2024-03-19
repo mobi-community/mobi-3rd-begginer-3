@@ -28,4 +28,7 @@ export const colors = {
         paleGray: "#dcdcdc",
         lightSilver: "#c0c0c0",
     },
+    SYSTEM: {
+        error: "#f00",
+    },
 };

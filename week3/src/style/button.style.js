@@ -44,21 +44,21 @@ const ColorCSS = {
     },
 };
 
-const SizeCss = {
+const SizeCSS = {
     small: css`
         width: ${sizes.button.smail.width};
         height: ${sizes.button.smail.height};
-        font-size: ${fontSize.small};
+        font-size: ${sizes.fontSize.small};
     `,
     medium: css`
         width: ${sizes.button.medium.width};
         height: ${sizes.button.medium.height};
-        font-size: ${fontSize.medium};
+        font-size: ${sizes.fontSize.medium};
     `,
     large: css`
         width: ${sizes.button.large.width};
         height: ${sizes.button.large.height};
-        font-size: ${fontSize.large};
+        font-size: ${sizes.fontSize.large};
     `,
 };
 
@@ -67,7 +67,7 @@ export const SButton = styled.button`
     cursor: pointer;
 
     ${({ theme }) => ColorCSS[theme]?.css}
-    ${({ size }) => SizeCss[size]}
+    ${({ size }) => SizeCSS[size]}
 
     &:active {
         transform: scale(0.98);

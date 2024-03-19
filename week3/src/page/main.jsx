@@ -1,4 +1,8 @@
 const Main = () => {
-    return <div>MAIN</div>;
+    const strUserData = sessionStorage.getItem("userData");
+
+    const userData = JSON.parse(strUserData);
+
+    return <div>Main</div>;
 };
 export default Main;
