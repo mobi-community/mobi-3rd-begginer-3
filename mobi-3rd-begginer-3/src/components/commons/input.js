@@ -1,4 +1,4 @@
-import { StyleInput } from "../styleTheme/input.style.js";
+import { StyleInput } from "../Theme/input.style";
 
 const Input = ({ type, placeholder, size, color }) => {
     return (
