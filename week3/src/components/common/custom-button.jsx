@@ -4,19 +4,21 @@ const CustomButton = ({
     children,
     theme,
     size,
-    disable,
+    disabled,
     $isActive,
     onClick,
+    type,
 }) => {
     const disabledTheme = "disabled";
 
-    const buttonTheme = disable ? disabledTheme : theme;
+    const buttonTheme = disabled ? disabledTheme : theme;
 
     return (
         <SButton
             theme={buttonTheme}
+            type={type}
             size={size}
-            disabled={disable}
+            disabled={disabled}
             isActive={$isActive}
             onClick={onClick}
         >

@@ -32,14 +32,6 @@ const Header = () => {
                 >
                     RHF 회원가입
                 </CustomButton>
-                <CustomButton
-                    theme={"deepDark"}
-                    size={"small"}
-                    onClick={onYUPNavigate}
-                    disable={isDisabled}
-                >
-                    YUP 회원가입
-                </CustomButton>
             </SignBox>
         </Wrapper>
     );

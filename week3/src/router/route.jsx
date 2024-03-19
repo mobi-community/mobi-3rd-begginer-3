@@ -5,15 +5,15 @@ import Signup from "../page/signup";
 
 const route = createBrowserRouter([
     {
-        path: "",
+        path: "/",
         element: <RootLayout />,
         children: [
             {
-                path: "",
+                path: "/",
                 element: <Main />,
             },
             {
-                path: "/signup",
+                path: "signup",
                 element: <Signup />,
             },
         ],

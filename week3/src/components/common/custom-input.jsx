@@ -8,8 +8,7 @@ const CustomInput = ({
     title = "",
     type = "text",
     registerKey = "",
-    register = () => {},
-    validate = {},
+    register,
     errors = {},
     ...rest
 }) => {
@@ -17,7 +16,7 @@ const CustomInput = ({
         <>
             {title && <label htmlFor={registerKey}>{title}</label>}
             <SInput
-                {...register(registerKey, validate)}
+                {...register(registerKey)}
                 id={registerKey}
                 theme={theme}
                 size={size}

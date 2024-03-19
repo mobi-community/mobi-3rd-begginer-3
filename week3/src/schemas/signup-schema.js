@@ -8,9 +8,9 @@ export const signupSchema = Yup.object().shape({
     password: Yup.string()
         .required("비밀번호를 입력해주세요")
         .min(8, "비밀번호는 최소 8자 이상이여야 합니다."),
-    password_confirm: Yup.string()
-        .oneOf([Yup.ref("password"), null], "비밀번호가 일치하지 않습니다.")
-        .required("비밀번호 확인은 필수입니다."),
+    // password_confirm: Yup.string()
+    //     .oneOf([Yup.ref("password"), null], "비밀번호가 일치하지 않습니다.")
+    //     .required("비밀번호 확인은 필수입니다."),
     phone: Yup.string()
         .required("연락처를 입력해주세요. (010-0000-0000)")
         .matches(/^010-\d{4}-\d{4}$/, "유효한 전화번호를 입력해주세요."),
