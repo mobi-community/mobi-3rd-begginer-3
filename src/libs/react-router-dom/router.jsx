@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../../layouts/layout";
-import SignUp from "../../components/signUp";
+import MultiStepSignUp from "../../pages/multistep-signUp";
 
 const Router = createBrowserRouter([
   {
@@ -9,7 +9,7 @@ const Router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <SignUp />,
+        element: <MultiStepSignUp />,
       },
     ],
   },
