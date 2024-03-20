@@ -3,6 +3,7 @@ import useMultiStepForm from "../../components/hook/multiStep";
 import FREETXTForm from "./FREETEXTForm";
 import ID_PWForm from "./ID_PWForm";
 import PHONE_BIRTHForm from "./PHONE_BIRTHForm";
+import Button from "@mui/material/Button";
 
 const SignupPage = () => {
     const initialFormData = {
@@ -45,9 +46,9 @@ const SignupPage = () => {
             <div>signup</div>
 
             <form onSubmit={(e) => e.preventDefault()}>
-                <button onClick={prev}>Prev</button>
+                <Button onClick={prev}>Prev</Button>
                 <span>{currentTitle}</span>
-                <button onClick={next}>{isLastStep ? "Submit" : "Next"}</button>
+                <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button>
                 {currentStep}
             </form>
         </>
