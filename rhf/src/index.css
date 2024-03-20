@@ -9,13 +9,13 @@
 		box-sizing: border-box;
 
 		@apply bg-transparent;
-		@apply text-black;
+		@apply text-white;
 		@apply text-base;
 		@apply font-normal;
 	}
 	html {
 		font-size: 62.5%;
-		@apply bg-white;
+		@apply bg-gray-800;
 	}
 	h1 {
 		@apply text-xl;

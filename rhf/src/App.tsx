@@ -1,12 +1,12 @@
-import {faAdd} from '@fortawesome/free-solid-svg-icons/faAdd'
-import {Input} from './components/commons/rhf-input'
+import {useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 
 const App = () => {
-	return (
-		<div>
-			<Input scale='large' icon={faAdd}></Input>
-		</div>
-	)
+	const navi = useNavigate()
+	useEffect(() => {
+		navi('/id-pw')
+	}, [])
+	return <></>
 }
 
 export default App

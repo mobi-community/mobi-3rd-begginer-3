@@ -19,14 +19,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 		<div
 			className={tailwindMerge(
 				SizeVariants[scale],
-				'flex items-center gap-2 h-12 p-1 border-2 rounded-sm text-gray-500 border-gray-500 focus-within:border-green-500',
+				'flex items-center gap-2 h-12 p-1 border-2 rounded-sm border-gray-500 focus-within:border-green-500',
 			)}
 		>
 			{icon && (
 				<FontAwesomeIcon {...{icon}} size='sm' className='text-inherit' />
 			)}
 			<input
-				className='w-full h-full placeholder:text-gray-700 text-inherit'
+				className='w-full h-full placeholder:text-gray-700 text-white focus:text-green-500'
+				autoComplete='off'
 				{...{ref}}
 				{...rest}
 			/>
