@@ -1,10 +1,19 @@
 import styled from "styled-components";
 import CustomInput from "../common/custom-input";
 import CustomButton from "../common/custom-button";
+import { firstSignupSchema } from "../../schemas/first-signup-schema";
+import UseFormHandle from "../../hook/useFormHandle";
 
-const FirstForm = ({ register, errors, onNext, isValid }) => {
+const FirstForm = ({ onNext, initData }) => {
+    // UserFormHandle custon hook 사용
+    const { register, handleSubmit, onSubmit, errors, isValid } = UseFormHandle(
+        initData,
+        firstSignupSchema,
+        onNext
+    );
+
     return (
-        <Container>
+        <Container onSubmit={handleSubmit(onSubmit)}>
             <CustomInput
                 register={register}
                 title="이메일"
@@ -26,11 +35,10 @@ const FirstForm = ({ register, errors, onNext, isValid }) => {
             />
             <ButtonBox>
                 <CustomButton
-                    type={"button"}
+                    type={"submit"}
                     theme={"deepDark"}
                     size={"small"}
                     disabled={!isValid}
-                    onClick={onNext}
                 >
                     NEXT
                 </CustomButton>
@@ -40,7 +48,7 @@ const FirstForm = ({ register, errors, onNext, isValid }) => {
 };
 export default FirstForm;
 
-const Container = styled.div`
+const Container = styled.form`
     display: flex;
     justify-content: center;
     align-items: center;

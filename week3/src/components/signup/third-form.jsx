@@ -1,12 +1,18 @@
 import styled from "styled-components";
-import CustomInput from "../common/custom-input";
 import CustomButton from "../common/custom-button";
-
 import CustomTextarea from "../common/custom-textarea";
+import { thirdSignupSchema } from "../../schemas/third-signup-schema";
+import UseFormHandle from "../../hook/useFormHandle";
 
-const ThirdForm = ({ register, onPrev, errors, isValid }) => {
+const ThirdForm = ({ onPrev, initData, onNext }) => {
+    const { register, handleSubmit, onSubmit, errors, isValid } = UseFormHandle(
+        initData,
+        thirdSignupSchema,
+        onNext
+    );
+
     return (
-        <Container>
+        <Container onSubmit={handleSubmit(onSubmit)}>
             <CustomTextarea
                 register={register}
                 title="하고싶은 말"
@@ -20,7 +26,6 @@ const ThirdForm = ({ register, onPrev, errors, isValid }) => {
                 type={"button"}
                 theme={"deepDark"}
                 size={"small"}
-                disabled={!isValid}
                 onClick={onPrev}
             >
                 PREV
@@ -39,7 +44,7 @@ const ThirdForm = ({ register, onPrev, errors, isValid }) => {
 };
 export default ThirdForm;
 
-const Container = styled.div``;
+const Container = styled.form``;
 
 const ButtonBox = styled.div`
     padding: 10px 0;

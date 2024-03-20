@@ -1,10 +1,18 @@
 import styled from "styled-components";
 import CustomInput from "../common/custom-input";
 import CustomButton from "../common/custom-button";
+import { secondSignupSchema } from "../../schemas/second-signup-schema";
+import UseFormHandle from "../../hook/useFormHandle";
 
-const SecondForm = ({ onNext, onPrev, register, errors, isValid }) => {
+const SecondForm = ({ onPrev, onNext, initData }) => {
+    const { register, handleSubmit, onSubmit, errors, isValid } = UseFormHandle(
+        initData,
+        secondSignupSchema,
+        onNext
+    );
+
     return (
-        <Container>
+        <Container onSubmit={handleSubmit(onSubmit)}>
             <CustomInput
                 register={register}
                 title="연락처"
@@ -28,17 +36,15 @@ const SecondForm = ({ onNext, onPrev, register, errors, isValid }) => {
                     type={"button"}
                     theme={"deepDark"}
                     size={"small"}
-                    disabled={!isValid}
                     onClick={onPrev}
                 >
                     PREV
                 </CustomButton>
                 <CustomButton
-                    type={"button"}
+                    type={"submit"}
                     theme={"deepDark"}
                     size={"small"}
                     disabled={!isValid}
-                    onClick={onNext}
                 >
                     NEXT
                 </CustomButton>
@@ -48,7 +54,7 @@ const SecondForm = ({ onNext, onPrev, register, errors, isValid }) => {
 };
 export default SecondForm;
 
-const Container = styled.div``;
+const Container = styled.form``;
 
 const ButtonBox = styled.div`
     padding: 10px 0;
