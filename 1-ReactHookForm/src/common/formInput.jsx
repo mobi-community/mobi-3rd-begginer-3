@@ -1,8 +1,8 @@
-const FormInput = ({ register, shapeKey, errors, ...rest }) => {
+const FormInput = ({ register, name, errors, ...rest }) => {
   return (
     <div>
-      <input {...register(shapeKey)} {...rest} />
-      {errors[shapeKey] && <p>{errors[shapeKey].message}</p>}
+      <input {...register(name)} {...rest} />
+      {errors[name] && <p>{errors[name].message}</p>}
     </div>
   );
 };

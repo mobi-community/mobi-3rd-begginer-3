@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import RootLayout from './layout/layout';
 import Main from '../pages/main';
-import EmailPW from '../pages/Sign-up/EmailPW';
+import EmailPW from '../pages/Sign-up/emailPW';
 import PhBirth from '../pages/Sign-up/phBirth';
 import AboutMe from '../pages/Sign-up/AboutMe';
 
