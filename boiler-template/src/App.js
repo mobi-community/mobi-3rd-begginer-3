@@ -1,17 +1,16 @@
 import "./App.css";
 
-import Spacer from "./components/common/spacer";
+import { Provider } from "react-redux";
+
+import store from "./libs/redux/store";
 import GlobalStyle from "./styles/global-style";
 
 function App() {
 	return (
 		<>
-			<GlobalStyle />
-
-			<div>
-				<Spacer height={10} />
-				ㅇㅇㅇㅇㅇ
-			</div>
+			<Provider store={store}>
+				<GlobalStyle />
+			</Provider>
 		</>
 	);
 }
