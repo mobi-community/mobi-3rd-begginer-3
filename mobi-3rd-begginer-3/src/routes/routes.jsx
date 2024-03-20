@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layout/layout";
-import SignUpPage from "../pages/singUpPage";
+import SignupPage from "../pages/signup/signupPage";
 
 const router = createBrowserRouter([
     {
@@ -9,7 +9,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "",
-                element: <SignUpPage />,
+                element: <SignupPage />,
             },
         ],
     },
