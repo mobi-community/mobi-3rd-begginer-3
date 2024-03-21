@@ -9,7 +9,7 @@ import { weatherConfig } from "../third-party/weather.config";
 const HomePage = () => {
   const [isBackGroundBlur, setIsBackGroundBlur] = useState(true);
   const [weather, setWeather] = useState();
-  const [, setDiaLogAttribute] = useDiaLogStore();
+  const [, onOpenDiaLog] = useDiaLogStore();
 
   const fetchWeather = async () => {
     try {
@@ -52,15 +52,13 @@ const HomePage = () => {
   };
 
   const onPressNavigateBlog = () => {
-    setDiaLogAttribute({
-      type: DialogState.ALERT,
+    onOpenDiaLog({
+      type: DialogState.ALERT,  
       text: "정말로 페이지를 이동하겠습니까",
-      isOpen: true,
-      onConfirm: async () => {
-        await setDiaLogAttribute({ isOpen: false });
+      onConfirm: () => {
         window.location.href = "/posts";
-      },
-    });
+      }
+    })
   };
 
   return (
