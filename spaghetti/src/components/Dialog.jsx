@@ -16,7 +16,7 @@ const Dialog = React.forwardRef(
     );
   }
 );
-Dialog.displayName = "dialog";
+Dialog.displayName = "Dialog";
 export default Dialog;
 
 const Wrapper = styled.dialog`

@@ -2,14 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { DIALOG_STATE } from '../constants';
-import { useDiaLogStore } from "../contexts/DialogProvider";
+import { useDialogStore } from "../contexts/DialogProvider";
 import { weatherConfig } from "../third-party/weather.config";
 
 
 const HomePage = () => {
   const [isBackGroundBlur, setIsBackGroundBlur] = useState(true);
   const [weather, setWeather] = useState();
-  const [, onOpenDiaLog] = useDiaLogStore();
+  const [, onOpenDialog] = useDialogStore();
 
   const fetchWeather = async () => {
     try {
@@ -52,7 +52,7 @@ const HomePage = () => {
   };
 
   const onPressNavigateBlog = () => {
-    onOpenDiaLog({
+    onOpenDialog({
       type: DIALOG_STATE.ALERT,  
       text: "정말로 페이지를 이동하겠습니까",
       onConfirm: () => {

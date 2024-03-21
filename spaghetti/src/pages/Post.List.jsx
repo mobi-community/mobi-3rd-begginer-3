@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Pagination from '../components/Pagination';
 import { FETCH_POINT_DATA_LIST, PARAM_CURRENT_PAGE } from "../constants";
-import { useDiaLogStore } from "../contexts/DialogProvider";
+import { useDialogStore } from "../contexts/DialogProvider";
 import { usePagination } from "../hooks/usePagination";
 import { fetchDataListAndPagination } from "../utils";
 
@@ -30,7 +30,7 @@ const PostListPage = () => {
   },[currentPage])
   
 
-  const [, setDiaLogAttribute] = useDiaLogStore();
+  const [, setDialogAttribute] = useDialogStore();
 
   useEffect(() => {
     const userName = localStorage.getItem("userName");
@@ -41,12 +41,12 @@ const PostListPage = () => {
   }, []);
 
   const onClickPost = async (postId) => {
-    await setDiaLogAttribute({
+    await setDialogAttribute({
       type: DIALOG_STATE.CONFIRM,
       text: "정말로 페이지를 이동하겠습니까",
       isOpen: true,
       onConfirm: async () => {
-        await setDiaLogAttribute({
+        await setDialogAttribute({
           text: "정말로 이동해버린다요!",
           onConfirm: async () => {
             window.location.href = `/post-detail/${postId}`;
@@ -54,7 +54,7 @@ const PostListPage = () => {
         });
       },
       onCancel: () => {
-        setDiaLogAttribute({ isOpen: false });
+        setDialogAttribute({ isOpen: false });
       },
     });
   };
