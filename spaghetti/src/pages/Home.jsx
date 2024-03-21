@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { DialogState } from '../constants';
+import { DIALOG_STATE } from '../constants';
 import { useDiaLogStore } from "../contexts/DialogProvider";
 import { weatherConfig } from "../third-party/weather.config";
 
@@ -53,7 +53,7 @@ const HomePage = () => {
 
   const onPressNavigateBlog = () => {
     onOpenDiaLog({
-      type: DialogState.ALERT,  
+      type: DIALOG_STATE.ALERT,  
       text: "정말로 페이지를 이동하겠습니까",
       onConfirm: () => {
         window.location.href = "/posts";

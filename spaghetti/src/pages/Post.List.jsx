@@ -42,7 +42,7 @@ const PostListPage = () => {
 
   const onClickPost = async (postId) => {
     await setDiaLogAttribute({
-      type: DialogState.CONFIRM,
+      type: DIALOG_STATE.CONFIRM,
       text: "정말로 페이지를 이동하겠습니까",
       isOpen: true,
       onConfirm: async () => {

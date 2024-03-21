@@ -1,6 +1,6 @@
 import { createContext, useContext, useRef, useState } from "react";
 import Dialog from "../components/Dialog";
-import { DialogState } from '../constants';
+import { DIALOG_STATE } from '../constants';
 
 const DiaLogContext = createContext();
 
@@ -9,7 +9,7 @@ export const useDiaLogStore = () => useContext(DiaLogContext);
 const DiaLogProvider = ({ children }) => {
   const diaLogRef = useRef();
   const [diaLogAttribute, setDiaLogAttribute] = useState({
-    type: DialogState.ALERT,
+    type: DIALOG_STATE.ALERT,
     text: "",
     isOpen: false,
     onConfirm: () => {},

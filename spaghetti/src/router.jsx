@@ -1,8 +1,9 @@
+import { createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/Home";
 import PostDetailPage from "./pages/Post.Detail";
 import PostListPage from "./pages/Post.List";
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />
@@ -16,3 +17,4 @@ export const router = createBrowserRouter([
     element: <PostDetailPage />
   },
 ]);
+export default router
