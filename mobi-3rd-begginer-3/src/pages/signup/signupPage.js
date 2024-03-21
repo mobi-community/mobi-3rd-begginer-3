@@ -11,46 +11,43 @@ const SignupPage = () => {
         password: "",
         phoneNumber: "",
         birth: "",
-        freeTxt: "",
+        freetext: "",
     };
     const [formData, setFormData] = useState(initialFormData);
-    const updateFields = (fields) => {
-        setFormData((prev) => ({ ...prev, ...fields }));
+    const [formIsValid, setFormIsValid] = useState(false);
+    const updateForm = (form) => {
+        setFormData((prev) => ({ ...prev, ...form }));
     };
-    const { currentTitle, currentStep, prev, next, isFirstStep, isLastStep } =
-        useMultiStepForm([
-            {
-                title: "ID_PWForm",
-                element: (
-                    <ID_PWForm {...formData} updateFields={updateFields} />
-                ),
-            },
-            {
-                title: "PHONE_BIRTHForm",
-                element: (
-                    <PHONE_BIRTHForm
-                        {...formData}
-                        updateFields={updateFields}
-                    />
-                ),
-            },
-            {
-                title: "FREE",
-                element: (
-                    <FREETXTForm {...formData} updateFields={updateFields} />
-                ),
-            },
-        ]);
+    const {
+        currentTitle,
+        currentStep,
+        prev,
+        next,
+        isFirstStep,
+        isLastStep,
+        isValid,
+    } = useMultiStepForm([
+        {
+            title: "ID_PWForm",
+            element: <ID_PWForm {...formData} updateForms={updateForm} />,
+        },
+        {
+            title: "PHONE_BIRTHForm",
+            element: <PHONE_BIRTHForm {...formData} updateForms={updateForm} />,
+        },
+        {
+            title: "FREE",
+            element: <FREETXTForm {...formData} updateForms={updateForm} />,
+        },
+    ]);
+
     return (
         <>
             <div>signup</div>
-
-            <form onSubmit={(e) => e.preventDefault()}>
-                <Button onClick={prev}>Prev</Button>
-                <span>{currentTitle}</span>
-                <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button>
-                {currentStep}
-            </form>
+            <Button onClick={prev}>Prev</Button>
+            <span>{currentTitle}</span>
+            <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button>
+            {currentStep}
         </>
     );
 };

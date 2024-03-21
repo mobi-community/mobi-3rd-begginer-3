@@ -1,19 +1,49 @@
-const ID_PWForm = ({ email, password, updateFields }) => {
+import { useForm } from "react-hook-form";
+import schema from "../../components/commons/yupValidation";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Input from "../../components/commons/input";
+import * as yup from "yup";
+import { useEffect, useState } from "react";
+
+const ID_PWForm = ({ email, password, updateForms }) => {
+    const idpwSchema = yup.object().shape({
+        email: schema.fields.email,
+    });
+
+    const {
+        register,
+        handleSubmit,
+        isValid,
+        watch,
+        formState: { errors },
+    } = useForm({ mode: "onChange", resolver: yupResolver(idpwSchema) });
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        updateFields({ [name]: value });
+        updateForms({ [name]: value });
+        console.log(updateForms, "updateForms");
+    };
+
+    const onSubmit = (data) => {
+        updateForms(data);
     };
 
     return (
         <>
-            <div>
+            <form>
                 <label htmlFor="email">Email</label>
-                <input
-                    id="email"
+                <Input
+                    type={"text"}
+                    register={register}
+                    registerKey="email"
+                    size="medium"
                     name="email"
                     value={email}
-                    onChange={handleChange}
+                    color="lemon"
+                    errors={errors}
+                    // validate={isValid}
                 />
+                {/* {errors.email && <p>{errors.email.message}</p>} */}
                 <label htmlFor="password">Password</label>
                 <input
                     id="password"
@@ -21,7 +51,7 @@ const ID_PWForm = ({ email, password, updateFields }) => {
                     value={password}
                     onChange={handleChange}
                 />
-            </div>
+            </form>
         </>
     );
 };

@@ -5,10 +5,13 @@ const Input = ({
     placeholder,
     size,
     color,
+    name,
     registerKey = "",
-    register = () => {},
+    register,
     validate = {},
     titleText = "",
+    errors = {},
+    ...rest
 }) => {
     return (
         <>
@@ -20,7 +23,13 @@ const Input = ({
                 color={color}
                 placeholder={placeholder}
                 size={size}
+                {...rest}
             />
+            <div>
+                {errors[registerKey] && (
+                    <span>{errors[registerKey].message}</span>
+                )}
+            </div>
         </>
     );
 };

@@ -1,7 +1,7 @@
-const PHONE_BIRTHForm = ({ phoneNumber, birthDay, updateFields }) => {
+const PHONE_BIRTHForm = ({ phoneNumber, birthDay, updateForms }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
-        updateFields({ [name]: value });
+        updateForms({ [name]: value });
     };
 
     return (
