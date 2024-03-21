@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import todoReducer from "./todo-reducer";
+
 const store = configureStore({
 	reducer: {
-		// 리듀서 등록
+		todos: todoReducer,
 	},
 });
 export default store;

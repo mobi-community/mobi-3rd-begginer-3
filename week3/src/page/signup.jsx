@@ -6,6 +6,9 @@ import SecondForm from "../components/signup/second-from";
 import ThirdForm from "../components/signup/third-form";
 
 const Signup = () => {
+    // RHF
+    //register/isvalid
+
     const [searchParams, setSearchParams] = useSearchParams();
     const [changeFormData, setChangeFormData] = useState({});
 
@@ -41,6 +44,8 @@ const Signup = () => {
                         <FirstForm
                             onNext={nextStep}
                             initData={changeFormData}
+                            // register={register}
+                            // isValid={isValid}
                         />
                     </>
                 )}

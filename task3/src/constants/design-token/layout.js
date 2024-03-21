@@ -1,6 +1,6 @@
-const layout = {
-  container: "1200px",
-  gutter: "15px",
-  columnGap: "30px",
+const layoutStyle = {
+	container: "1200px",
+	gutter: "15px",
+	columnGap: "30px",
 };
-export default layout;
+export default layoutStyle;
