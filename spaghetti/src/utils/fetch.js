@@ -4,5 +4,7 @@ export const fetchDataListAndPagination = async ({ endpoints, page = 1, take = 2
   const response = await axios.get(endpoints, {
 		params: { page, take, limit }
   })
-  return response.data
+  const { PageNation: pagination, ...rest } = response.data
+  const dataList = Object.values(rest)[0]
+  return {dataList,pagination}
 }
