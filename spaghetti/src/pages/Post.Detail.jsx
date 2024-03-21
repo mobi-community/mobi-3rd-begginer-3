@@ -1,19 +1,28 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import Pagination from "../components/Pagination";
 import CommentPageNation from "../components/pagenation/Pagenation.Comment";
 
 const LIMIT_TAKE = 20;
+
 const PostDetailPage = () => {
   const [params] = useSearchParams();
   const [postDetail, setPostDetail] = useState([]);
   const [commentList, setCommentList] = useState([]);
   const [isOpenCommentList, setIsOpenCommentList] = useState(false);
 
+  // const { getPaginationParam ,registerPaginationParams } = usePagination();
+
   const fetchPostDetail = async () => {
     const response = await axios.get("/api/post");
     setPostDetail(response.data);
   };
+
+  useEffect(() => {
+    fetchPostDetail()
+  }, [])
+  console.log(postDetail)
 
   const fetchComments = async () => {
     const response = await axios.get("/api/comments", {
@@ -60,6 +69,7 @@ const PostDetailPage = () => {
               </div>
             ))}
             <CommentPageNation />
+            <Pagination/>
           </>
         )}
       </div>

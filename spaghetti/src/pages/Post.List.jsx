@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Pagination from '../components/Pagination';
-import { FETCH_POINT_DATA_LIST, PARAM_CURRENT_PAGE } from "../constants";
+import { DIALOG_STATE, FETCH_POINT_DATA_LIST, PARAM_CURRENT_PAGE } from "../constants";
 import { useDialogStore } from "../contexts/DialogProvider";
 import { usePagination } from "../hooks/usePagination";
 import { fetchDataListAndPagination } from "../utils";
@@ -8,7 +9,9 @@ import { fetchDataListAndPagination } from "../utils";
 const PostListPage = () => {
   const [postList, setPostList] = useState([]);
   const { getPaginationParam, registerPaginationParams } = usePagination()
-  
+  const { onOpenDialog, onCloseDialog } = useDialogStore();
+  const navigate = useNavigate();
+
   const currentPage = getPaginationParam(PARAM_CURRENT_PAGE, 1)
   
   const asyncFetching = async () => {
@@ -30,25 +33,21 @@ const PostListPage = () => {
   },[currentPage])
   
 
-  const [, setDialogAttribute] = useDialogStore();
-
   const onClickPost = async (postId) => {
-    await setDialogAttribute({
+    onOpenDialog({
       type: DIALOG_STATE.CONFIRM,
       text: "정말로 페이지를 이동하겠습니까",
-      isOpen: true,
       onConfirm: async () => {
-        await setDialogAttribute({
+        await onOpenDialog({
           text: "정말로 이동해버린다요!",
           onConfirm: async () => {
-            window.location.href = `/post-detail/${postId}`;
+            navigate(`/post-detail/${postId}`)
+            onCloseDialog()
           },
         });
       },
-      onCancel: () => {
-        setDialogAttribute({ isOpen: false });
-      },
-    });
+      onCancel: onCloseDialog
+    })
   };
 
   return (

@@ -7,8 +7,8 @@ const DialogContext = createContext()
 export const useDialogStore = () => useContext(DialogContext)
 
 export const DialogProvider = ({ children }) => {
-	const DialogRef = useRef()
-	const [DialogAttribute, setDialogAttribute] = useState({
+	const dialogRef = useRef()
+	const [dialogAttribute, setDialogAttribute] = useState({
 		type: DIALOG_STATE.ALERT,
 		text: '',
 		isOpen: false,
@@ -21,7 +21,7 @@ export const DialogProvider = ({ children }) => {
 	})
 
 	const onOpenDialog = (args) => {
-		DialogRef.current.showModal()
+		dialogRef.current.showModal()
 		setDialogAttribute((prev) => ({
 			...prev,
 			...args,
@@ -29,10 +29,8 @@ export const DialogProvider = ({ children }) => {
 		}))
 	}
 
-	const onCloseDialog = () => {
-		// 이미 닫힌 상태라면 이후의 로직을 수행하지 않습니다.
-		if (!DialogAttribute.isOpen) return
-		DialogRef.current.close()
+  const onCloseDialog = () => {
+    dialogRef.current.close()
 		setDialogAttribute((prev) => ({
 			...prev,
 			isOpen: false
@@ -40,9 +38,9 @@ export const DialogProvider = ({ children }) => {
 	}
 
 	return (
-		<DialogContext.Provider value={[DialogAttribute, onOpenDialog]}>
+    <DialogContext.Provider value={{ dialogAttribute, onOpenDialog, onCloseDialog }}>
 			{children}
-			<Dialog {...{ ...DialogAttribute }} ref={DialogRef} onClose={onCloseDialog} />
+			<Dialog {...{ ...dialogAttribute }} ref={dialogRef} onClose={onCloseDialog} />
 		</DialogContext.Provider>
 	)
 }

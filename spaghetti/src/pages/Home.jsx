@@ -9,7 +9,7 @@ import { weatherConfig } from "../third-party/weather.config";
 const HomePage = () => {
   const [isBackGroundBlur, setIsBackGroundBlur] = useState(true);
   const [weather, setWeather] = useState();
-  const [, onOpenDialog] = useDialogStore();
+  const {onOpenDialog} = useDialogStore();
 
   const fetchWeather = async () => {
     try {
