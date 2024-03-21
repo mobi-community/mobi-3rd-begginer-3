@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+export const Form = styled.form`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
 export const InputGroup = styled.div`
   display: flex;
   flex-direction: row;

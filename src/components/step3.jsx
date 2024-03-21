@@ -3,33 +3,27 @@ import {
   InputGroup,
   InputTitle,
   ErrorText,
+  Form,
 } from "../libs/styled-components/displayStyle";
 import { useState } from "react";
 import styled from "styled-components";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { step3Schema } from "../libs/yup/schema/step3";
 
-const Step3 = ({ updateForm }) => {
-  const schema = yup.object().shape({
-    message: yup
-      .string()
-      .min(100, "하고싶은 말은 100자 이상 입력해주세요.")
-      .max(300, "하고싶은 말은 300자 이내로 입력해주세요.")
-      .required("하고싶은 말을 입력해주세요."),
-  });
-
+const Step3 = ({ updateForm, next }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(step3Schema),
   });
 
-  const onSubmit = (data) => {
+  const onClickNext = (data) => {
     updateForm(data);
+    next();
     console.log(data);
   };
 
@@ -47,7 +41,7 @@ const Step3 = ({ updateForm }) => {
   };
 
   return (
-    <>
+    <Form>
       <InputGroup>
         <InputTitle>
           하고싶은 말
@@ -72,8 +66,14 @@ const Step3 = ({ updateForm }) => {
         />
       </InputGroup>
       {errors.message && <ErrorText>{errors.message.message}</ErrorText>}
-      <Button onClick={handleSubmit(onSubmit)}>Next</Button>
-    </>
+      <Button
+        variant="outlined"
+        onClick={handleSubmit(onClickNext)}
+        disabled={!isValid}
+      >
+        회원가입
+      </Button>
+    </Form>
   );
 };
 export default Step3;

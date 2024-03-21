@@ -4,47 +4,30 @@ import {
   InputGroup,
   InputTitle,
   ErrorText,
+  Form,
 } from "../libs/styled-components/displayStyle";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { step1Schema } from "../libs/yup/schema/step1";
 
-const Step1 = ({ updateForm }) => {
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("이메일 양식이 올바르지 않습니다")
-      .required("이메일을 입력해주세요"),
-    password: yup
-      .string()
-      .min(8, "8글자 이상 입력해주세요")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/,
-        "비밀번호는 8글자 이상 대소문자,특수문자를 1자 이상 포함하여야 합니다."
-      )
-      .required("비밀번호를 입력해주세요"),
-    passwordConfirm: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "비밀번호가 일치하지 않습니다")
-      .required("비밀번호 확인을 입력해주세요"),
-  });
-
+const Step1 = ({ updateForm, next }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(step1Schema),
   });
 
-  const onSubmit = (data) => {
+  const onClickNext = (data) => {
     updateForm(data);
+    next();
     console.log(data);
   };
 
   return (
-    <>
+    <Form>
       <InputGroup>
         <InputTitle>이메일</InputTitle>
         <TextField
@@ -87,8 +70,15 @@ const Step1 = ({ updateForm }) => {
       {errors.passwordConfirm && (
         <ErrorText>{errors.passwordConfirm.message}</ErrorText>
       )}
-      <Button onClick={handleSubmit(onSubmit)}>Next</Button>
-    </>
+      <Button
+        type="button"
+        variant="outlined"
+        onClick={handleSubmit(onClickNext)}
+        disabled={!isValid}
+      >
+        Next
+      </Button>
+    </Form>
   );
 };
 
