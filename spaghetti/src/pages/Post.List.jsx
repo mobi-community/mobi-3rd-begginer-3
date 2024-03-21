@@ -1,25 +1,36 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import PostPageNation from "../components/pagenation/Pagenation.Post";
-import { DialogState } from "../constants";
+import Pagination from '../components/Pagination';
+import { FETCH_POINT_DATA_LIST, PARAM_CURRENT_PAGE } from "../constants";
 import { useDiaLogStore } from "../contexts/DialogProvider";
-
-const LIMIT_TAKE = 10;
+import { usePagination } from "../hooks/usePagination";
+import { fetchDataListAndPagination } from "../utils";
 
 const PostListPage = () => {
-  const [params] = useSearchParams();
   const [postList, setPostList] = useState([]);
-  const [, setDiaLogAttribute] = useDiaLogStore();
+  const { getPaginationParam, registerPaginationParams } = usePagination()
+  
+  const currentPage = getPaginationParam(PARAM_CURRENT_PAGE, 1)
+  
+  const asyncFetching = async () => {
+    const {PageNation, Posts} = await fetchDataListAndPagination({
+      endpoints: FETCH_POINT_DATA_LIST.POST,
+      page: currentPage,
+      take: 20,
+      limit: 10,
+    })
+    registerPaginationParams(
+      {
+        ...PageNation
+      }
+    )
+    setPostList([...Posts])
+  }
+  useEffect(() => {
+    asyncFetching()
+  },[currentPage])
+  
 
-  const fetchPostList = async () => {
-    const response = await axios.get("/api/posts", {
-      params: {
-        take: params.get("take") ?? LIMIT_TAKE,
-      },
-    });
-    setPostList(response.data.Posts);
-  };
+  const [, setDiaLogAttribute] = useDiaLogStore();
 
   useEffect(() => {
     const userName = localStorage.getItem("userName");
@@ -28,10 +39,6 @@ const PostListPage = () => {
       window.location.href = "/";
     }
   }, []);
-
-  useEffect(() => {
-    fetchPostList();
-  }, [params]);
 
   const onClickPost = async (postId) => {
     await setDiaLogAttribute({
@@ -67,8 +74,9 @@ const PostListPage = () => {
           <td>{post.User.nickName}</td>
         </tr>
       ))}
-      <PostPageNation />
+      <Pagination></Pagination>
     </table>
   );
 };
 export default PostListPage;
+

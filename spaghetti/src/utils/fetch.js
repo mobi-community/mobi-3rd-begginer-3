@@ -1,12 +1,8 @@
 import axios from "axios";
 
-export const fetchComment = async ({page, take,limit}) => {
-  const response = await axios.get("/api/comments", {
-    params: {page,limit,take},
-  });
-  return response.data;
+export const fetchDataListAndPagination = async ({ endpoints, page = 1, take = 20, limit = 10 }) => {
+  const response = await axios.get(endpoints, {
+		params: { page, take, limit }
+  })
+  return response.data
 }
-
-// export const fetchPost = async () => {
-//   const response 
-// }

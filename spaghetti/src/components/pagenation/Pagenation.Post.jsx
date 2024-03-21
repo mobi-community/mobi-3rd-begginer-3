@@ -8,6 +8,14 @@ const LIMIT_TAKE = 20; // 한번에 가지고 오는 양
 const PostPageNation = () => {
   const [params, setParams] = useSearchParams();
   const [pageNation, setPageNation] = useState();
+  console.log(' ')
+  console.log(' ')
+  console.log("👇 이걸봐")
+  console.log(pageNation)
+  console.log(params.get("page"))
+  console.log(params.get("limit"))
+  console.log(pageNation?.startPage)
+  console.log(' ')
 
   const fetchPostPageNation = useCallback(async () => {
     const response = await axios.get("/api/posts", {
