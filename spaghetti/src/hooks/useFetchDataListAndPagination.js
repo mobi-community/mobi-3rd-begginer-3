@@ -11,7 +11,8 @@ export const useFetchDataListAndPagination = (fetchParameter) => {
   
   const asyncFetching = async () => {
     const { dataList, pagination } = await fetchDataListAndPagination({ ...fetchParameter, page: currentPage })
-    registerPaginationParams({ ...pagination })
+    const perPage = fetchParameter?.take ?? 1 // 한번에 보여져야할 페이지 수
+    registerPaginationParams({ ...pagination, perPage })
     setDataList(dataList)
   }
   useEffect(() => {

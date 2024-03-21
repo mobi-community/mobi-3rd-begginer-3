@@ -3,6 +3,7 @@ import AuthRoute from "./components/AuthRoute";
 import HomePage from "./pages/Home";
 import PostDetailPage from "./pages/Post.Detail";
 import PostListPage from "./pages/Post.List";
+import { fetchPostDetailById } from "./utils";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/post-detail/:postId",
-        element: <PostDetailPage />
+        element: <PostDetailPage />,
+        loader: async ({ params }) => {
+          const postId = params.postId
+          const postDetail = await fetchPostDetailById(postId)
+          return { postDetail }
+        }
       },
     ]
   }

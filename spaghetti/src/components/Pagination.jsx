@@ -13,7 +13,7 @@ const Pagination = () => {
 	const endPage = getPaginationParam(PARAM_END_PAGE)
 
 	const isPrevButtonVisible = checkIsPrevButtonVisible()
-	const isNextButtonVisible = checkIsNextButtonVisible(10)
+	const isNextButtonVisible = checkIsNextButtonVisible()
 
 	return (
 		<div>
