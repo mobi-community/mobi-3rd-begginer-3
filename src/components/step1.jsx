@@ -1,5 +1,5 @@
 // Step1 컴포넌트
-import { TextField, Button } from "@mui/material"; // Button import 추가
+import { TextField, Button, ButtonGroup } from "@mui/material"; // Button import 추가
 import {
   InputGroup,
   InputTitle,

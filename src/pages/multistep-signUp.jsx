@@ -18,6 +18,7 @@ const MultiStepSignUp = () => {
 
   const [formData, setFormData] = useState(INITIAL_FORMDATA); // 폼데이터 상태 관리
   const [nextStep, setNextStep] = useState(null);
+  const [prevStep, setPrevStep] = useState(null);
 
   const updateForm = (form) => {
     setFormData((prev) => ({ ...prev, ...form }));
@@ -29,39 +30,51 @@ const MultiStepSignUp = () => {
     }
   }, [nextStep]);
 
-  const { currentTitle, currentStep, prev, next, isFirstStep, isLastStep } =
-    useMultiStepForm([
-      {
-        title: "ID & PASSWORD",
-        element: (
-          <Step1
-            {...formData}
-            updateForm={updateForm}
-            next={() => setNextStep(next)}
-          />
-        ),
-      },
-      {
-        title: "Phone & Birth",
-        element: (
-          <Step2
-            {...formData}
-            updateForm={updateForm}
-            next={() => setNextStep(next)}
-          />
-        ),
-      },
-      {
-        title: "하고싶은 말",
-        element: (
-          <Step3
-            {...formData}
-            updateForm={updateForm}
-            next={() => setNextStep(next)}
-          />
-        ),
-      },
-    ]);
+  const {
+    currentStepIndex,
+    currentTitle,
+    currentStep,
+    prev,
+    next,
+    isFirstStep,
+    isLastStep,
+  } = useMultiStepForm([
+    {
+      title: "ID & PASSWORD",
+      element: (
+        <Step1
+          formData={formData}
+          setFormData={setFormData}
+          updateForm={updateForm}
+          next={() => setNextStep(next)}
+        />
+      ),
+    },
+    {
+      title: "Phone & Birth",
+      element: (
+        <Step2
+          formData={formData}
+          setFormData={setFormData}
+          updateForm={updateForm}
+          next={() => setNextStep(next)}
+          prev={() => setPrevStep(prev)}
+        />
+      ),
+    },
+    {
+      title: "하고싶은 말",
+      element: (
+        <Step3
+          formData={formData}
+          setFormData={setFormData}
+          updateForm={updateForm}
+          next={() => setNextStep(next)}
+          prev={() => setPrevStep(prev)}
+        />
+      ),
+    },
+  ]);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -72,15 +85,15 @@ const MultiStepSignUp = () => {
     <>
       <S.Form onSubmit={formSubmitHandler}>
         <S.Header>
-          {!isFirstStep && (
+          {/* {!isFirstStep && (
             <Button variant="outlined" onClick={prev}>
               Prev
             </Button>
-          )}
+          )} */}
           <S.StepTitle>{currentTitle}</S.StepTitle>
-          <Button type="button" variant="outlined" onClick={next}>
+          {/*  <Button type="button" variant="outlined" onClick={next}>
             {isLastStep ? "회원가입" : "Next"}
-          </Button>
+          </Button> */}
         </S.Header>
         {currentStep}
       </S.Form>

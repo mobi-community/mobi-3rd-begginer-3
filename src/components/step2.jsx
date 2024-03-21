@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, TextField } from "@mui/material";
+import { Button, ButtonGroup, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import {
   InputGroup,
@@ -9,7 +9,7 @@ import {
 } from "../libs/styled-components/displayStyle";
 import { step2Schema } from "../libs/yup/schema/step2";
 
-const Step2 = ({ updateForm, next }) => {
+const Step2 = ({ updateForm, next, prev }) => {
   const {
     register,
     handleSubmit,
@@ -19,6 +19,11 @@ const Step2 = ({ updateForm, next }) => {
     resolver: yupResolver(step2Schema),
   });
 
+  const onClickPrev = (data) => {
+    updateForm(data);
+    prev();
+    console.log(data);
+  };
   const onClickNext = (data) => {
     updateForm(data);
     next();
@@ -52,13 +57,24 @@ const Step2 = ({ updateForm, next }) => {
         />
       </InputGroup>
       {errors.birth && <ErrorText>{errors.birth.message}</ErrorText>}
-      <Button
-        variant="outlined"
-        onClick={handleSubmit(onClickNext)}
-        disabled={!isValid}
-      >
-        Next
-      </Button>
+
+      <InputGroup>
+        <Button
+          type="button"
+          variant="outlined"
+          onClick={onClickPrev}
+          sx={{ marginRight: "20px" }}
+        >
+          Prev
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={handleSubmit(onClickNext)}
+          disabled={!isValid}
+        >
+          Next
+        </Button>
+      </InputGroup>
     </Form>
   );
 };

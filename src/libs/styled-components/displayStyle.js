@@ -28,3 +28,9 @@ export const ErrorText = styled.div`
   font-size: 12px;
   font-weight: 600;
 `;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;

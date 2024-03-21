@@ -4,6 +4,7 @@ import {
   InputTitle,
   ErrorText,
   Form,
+  ButtonGroup,
 } from "../libs/styled-components/displayStyle";
 import { useState } from "react";
 import styled from "styled-components";
@@ -11,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { step3Schema } from "../libs/yup/schema/step3";
 
-const Step3 = ({ updateForm, next }) => {
+const Step3 = ({ updateForm, next, prev }) => {
   const {
     register,
     handleSubmit,
@@ -21,10 +22,15 @@ const Step3 = ({ updateForm, next }) => {
     resolver: yupResolver(step3Schema),
   });
 
-  const onClickNext = (data) => {
-    updateForm(data);
-    next();
+  const onClickPrev = (data) => {
+    prev();
     console.log(data);
+  };
+
+  const onClickSignUp = (data) => {
+    updateForm(data);
+    alert(data);
+    console.log(data.message);
   };
 
   const [currentLength, setCurrentLength] = useState(0);
@@ -66,13 +72,23 @@ const Step3 = ({ updateForm, next }) => {
         />
       </InputGroup>
       {errors.message && <ErrorText>{errors.message.message}</ErrorText>}
-      <Button
-        variant="outlined"
-        onClick={handleSubmit(onClickNext)}
-        disabled={!isValid}
-      >
-        회원가입
-      </Button>
+      <ButtonGroup>
+        <Button
+          type="button"
+          variant="outlined"
+          onClick={onClickPrev}
+          sx={{ marginRight: "20px" }}
+        >
+          Prev
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={handleSubmit(onClickSignUp)}
+          disabled={!isValid}
+        >
+          회원가입
+        </Button>
+      </ButtonGroup>
     </Form>
   );
 };
