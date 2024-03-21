@@ -32,14 +32,6 @@ const PostListPage = () => {
 
   const [, setDialogAttribute] = useDialogStore();
 
-  useEffect(() => {
-    const userName = localStorage.getItem("userName");
-    if (!userName) {
-      alert("로그인이 필요합니다");
-      window.location.href = "/";
-    }
-  }, []);
-
   const onClickPost = async (postId) => {
     await setDialogAttribute({
       type: DIALOG_STATE.CONFIRM,

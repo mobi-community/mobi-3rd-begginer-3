@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { DIALOG_STATE } from '../constants';
+import { DIALOG_STATE, LOCAL_KEY_AUTH } from '../constants';
 import { useDialogStore } from "../contexts/DialogProvider";
 import { weatherConfig } from "../third-party/weather.config";
 
@@ -36,17 +36,15 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchWeather();
-    const userName = localStorage.getItem("userName");
-    if (!userName) {
-      return setIsBackGroundBlur(true);
-    } else setIsBackGroundBlur(false);
+    const auth = localStorage.getItem(LOCAL_KEY_AUTH);
+    if (!auth) return setIsBackGroundBlur(true);
   }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
     const userName = e.target.userName.value.trim();
     if (!userName) return alert("이름을 입력해주세요");
-    localStorage.setItem("userName", userName);
+    localStorage.setItem(LOCAL_KEY_AUTH, userName);
     setIsBackGroundBlur(false);
     e.target.userName.value = "";
   };

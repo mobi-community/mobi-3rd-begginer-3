@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import CommentPageNation from "../components/pagenation/Pagenation.Comment";
 import { useSearchParams } from "react-router-dom";
+import CommentPageNation from "../components/pagenation/Pagenation.Comment";
 
 const LIMIT_TAKE = 20;
 const PostDetailPage = () => {
@@ -33,15 +33,6 @@ const PostDetailPage = () => {
   const onClickHiddenComments = () => {
     setIsOpenCommentList(false);
   };
-
-  useEffect(() => {
-    const userName = localStorage.getItem("userName");
-    if (!userName) {
-      alert("로그인이 필요합니다");
-      window.location.href = "/";
-    }
-    fetchPostDetail();
-  }, []);
 
   useEffect(() => {
     if (!isOpenCommentList) return;
