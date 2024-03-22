@@ -1,5 +1,5 @@
 // Step1 컴포넌트
-import { TextField, Button, ButtonGroup } from "@mui/material"; // Button import 추가
+import { TextField, Button } from "@mui/material"; // Button import 추가
 import {
   InputGroup,
   InputTitle,
@@ -20,14 +20,20 @@ const Step1 = ({ updateForm, next }) => {
     resolver: yupResolver(step1Schema),
   });
 
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log("Form submitted data:", updateForm);
+  };
+
   const onClickNext = (data) => {
     updateForm(data);
+    sessionStorage.setItem("formData", JSON.stringify(data));
     next();
     console.log(data);
   };
 
   return (
-    <Form>
+    <Form onSubmit={formSubmitHandler}>
       <InputGroup>
         <InputTitle>이메일</InputTitle>
         <TextField

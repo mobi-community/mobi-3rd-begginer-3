@@ -5,17 +5,15 @@ import Step2 from "../components/step2";
 import Step3 from "../components/step3";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
-
+export const INITIAL_FORMDATA = {
+  email: "",
+  password: "",
+  passwordConfirm: "",
+  phone: "",
+  birth: "",
+  message: "",
+};
 const MultiStepSignUp = () => {
-  const INITIAL_FORMDATA = {
-    email: "",
-    password: "",
-    passwordConfirm: "",
-    phone: "",
-    birth: "",
-    message: "",
-  };
-
   const [formData, setFormData] = useState(INITIAL_FORMDATA); // 폼데이터 상태 관리
   const [nextStep, setNextStep] = useState(null);
   const [prevStep, setPrevStep] = useState(null);
@@ -30,15 +28,7 @@ const MultiStepSignUp = () => {
     }
   }, [nextStep]);
 
-  const {
-    currentStepIndex,
-    currentTitle,
-    currentStep,
-    prev,
-    next,
-    isFirstStep,
-    isLastStep,
-  } = useMultiStepForm([
+  const { currentTitle, currentStep, prev, next } = useMultiStepForm([
     {
       title: "ID & PASSWORD",
       element: (
@@ -76,39 +66,24 @@ const MultiStepSignUp = () => {
     },
   ]);
 
-  const formSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log("Form submitted data:", formData);
-  };
+  // const formSubmitHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log("Form submitted data:", formData);
+  // };
 
   return (
     <>
-      <S.Form onSubmit={formSubmitHandler}>
-        <S.Header>
-          {/* {!isFirstStep && (
-            <Button variant="outlined" onClick={prev}>
-              Prev
-            </Button>
-          )} */}
-          <S.StepTitle>{currentTitle}</S.StepTitle>
-          {/*  <Button type="button" variant="outlined" onClick={next}>
-            {isLastStep ? "회원가입" : "Next"}
-          </Button> */}
-        </S.Header>
-        {currentStep}
-      </S.Form>
+      {/* <Form onSubmit={formSubmitHandler}> */}
+      <Header>
+        <StepTitle>{currentTitle}</StepTitle>
+      </Header>
+      {currentStep}
+      {/* </Form> */}
     </>
   );
 };
 export default MultiStepSignUp;
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const Header = styled.header`
   margin: 20px;
 `;
@@ -121,14 +96,9 @@ const Form = styled.form`
 `;
 
 const StepTitle = styled.span`
+  justify-content: center;
+  display: flex;
   margin: 20px 100px;
   font-size: 18px;
   font-weight: 700;
 `;
-
-const S = {
-  Wrapper,
-  Header,
-  Form,
-  StepTitle,
-};

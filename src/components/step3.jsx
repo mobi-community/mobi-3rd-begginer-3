@@ -29,8 +29,9 @@ const Step3 = ({ updateForm, next, prev }) => {
 
   const onClickSignUp = (data) => {
     updateForm(data);
-    alert(data);
-    console.log(data.message);
+    sessionStorage.setItem("formData", JSON.stringify(data));
+    alert(data.message);
+    console.log(data);
   };
 
   const [currentLength, setCurrentLength] = useState(0);

@@ -21,11 +21,13 @@ const Step2 = ({ updateForm, next, prev }) => {
 
   const onClickPrev = (data) => {
     updateForm(data);
+    sessionStorage.getItem("prevFormData");
     prev();
     console.log(data);
   };
   const onClickNext = (data) => {
     updateForm(data);
+    sessionStorage.setItem("formData", JSON.stringify(data));
     next();
     console.log(data);
   };

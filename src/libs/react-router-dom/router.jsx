@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../../layouts/layout";
 import MultiStepSignUp from "../../pages/multistep-signUp";
+import RHFStep from "../../components/rhfStep1";
 
 const Router = createBrowserRouter([
   {
@@ -10,6 +11,10 @@ const Router = createBrowserRouter([
       {
         path: "",
         element: <MultiStepSignUp />,
+      },
+      {
+        path: "/rhf-step",
+        element: <RHFStep />,
       },
     ],
   },
