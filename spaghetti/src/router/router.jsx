@@ -7,7 +7,7 @@ import { postDetailLoader, weatherLoader } from "./loader";
 
 const router = createBrowserRouter([
   {
-    path: '/home',
+    path: '/',
     element: <HomePage />,
     loader: weatherLoader
   },

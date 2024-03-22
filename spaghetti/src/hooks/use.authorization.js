@@ -9,7 +9,6 @@ export const useAuthorization = () => {
   }
   useEffect(() => {
     const auth = localStorage.getItem(LOCAL_KEY_AUTH)
-    console.log(auth)
     if (!auth) setIsAuthorized(false)
   },[])
 

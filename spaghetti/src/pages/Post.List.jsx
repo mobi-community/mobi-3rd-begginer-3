@@ -1,35 +1,27 @@
 import { useNavigate } from 'react-router-dom'
 import Pagination from '../components/Pagination'
-import { DIALOG_STATE, FETCH_POINT_DATA_LIST } from '../constants'
+import { FETCH_POINT_DATA_LIST } from '../constants'
 import { useDialogStore } from '../contexts/DialogProvider'
-import { useFetchDataListAndPagination } from '../hooks'
+import { useDialog, useFetchDataListAndPagination } from '../hooks'
 
 const PostListPage = () => {
-  const navigate = useNavigate()
-  const { onOpenDialog, onCloseDialog } = useDialogStore()
+	const navigate = useNavigate()
+	const { onCloseDialog } = useDialogStore()
 	const { dataList: postList } = useFetchDataListAndPagination({
 		endpoints: FETCH_POINT_DATA_LIST.POST,
 		take: 20,
 		limit: 10
-  })
-  
+	})
+	const { onOpenConfirm } = useDialog()
+
 	const onClickPost = async (postId) => {
-		onOpenDialog({
-			type: DIALOG_STATE.CONFIRM,
-			text: '정말로 페이지를 이동하겠습니까',
-			onConfirm: async () => {
-				await onOpenDialog({
-					text: '정말로 이동해버린다요!',
-					onConfirm: async () => {
-						navigate(`/post-detail/${postId}`)
-						onCloseDialog()
-					}
-				})
-			},
-			onCancel: onCloseDialog
+		onOpenConfirm('정말로 페이지를 이동하겠습니까', () => {
+			onOpenConfirm('정말로 이동해버린다요!', () => {
+				navigate(`/post-detail/${postId}`), onCloseDialog()
+			})
 		})
-  }
-  
+	}
+
 	return (
 		<table>
 			<caption>Post List Page</caption>
