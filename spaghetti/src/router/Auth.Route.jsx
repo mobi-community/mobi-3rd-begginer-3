@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
-import { LOCAL_KEY_AUTH } from '../constants'
+import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { LOCAL_KEY_AUTH } from "../constants";
 
 const AuthRoute = () => {
   const navigate = useNavigate()
-
   useEffect(() => {
     const auth = localStorage.getItem(LOCAL_KEY_AUTH);
     if (!auth) {
@@ -14,5 +13,4 @@ const AuthRoute = () => {
   },[])
   return <Outlet/>
 }
-
 export default AuthRoute

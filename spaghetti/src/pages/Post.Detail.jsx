@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Pagination from '../components/Pagination';
 import { FETCH_POINT_DATA_LIST } from "../constants";
@@ -12,6 +13,8 @@ const PostDetailPage = () => {
       limit: 20,
     }
   )
+  const [isOpenCommentList, setIsOpenCommentList] = useState(true)
+  const commentListToggleLabel = isOpenCommentList ? "댓글 숨기기" : "댓글 달기"
 
   return (
     <div>
@@ -19,12 +22,12 @@ const PostDetailPage = () => {
       <div>
         <p>제목: {postDetail.title}</p>
         <p>내용: {postDetail.content}</p>
-        {!isOpenCommentList && (
-          <button onClick={()=>{}}>댓글 보기</button>
-        )}
-        {isOpenCommentList && (
-          <button onClick={()=>{}}>댓글 숨기기</button>
-        )}
+        <button onClick={() => {
+          setIsOpenCommentList(prev => !prev)
+        }}>
+          {commentListToggleLabel}
+        </button>
+        
         {isOpenCommentList && (
           <>
             {commentList.map((comment) => (

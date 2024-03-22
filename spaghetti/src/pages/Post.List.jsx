@@ -5,7 +5,7 @@ import { useDialogStore } from '../contexts/DialogProvider'
 import { useFetchDataListAndPagination } from '../hooks'
 
 const PostListPage = () => {
-	const navigate = useNavigate()
+  const navigate = useNavigate()
   const { onOpenDialog, onCloseDialog } = useDialogStore()
 	const { dataList: postList } = useFetchDataListAndPagination({
 		endpoints: FETCH_POINT_DATA_LIST.POST,

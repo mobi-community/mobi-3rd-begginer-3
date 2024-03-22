@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom'
 import { worker } from './__mock__/browser'
 import './app.css'
 import { DialogProvider } from './contexts'
-import router from './router'
+import router from './router/router'
 
 worker.start()
 
