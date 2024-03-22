@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { PARAM_CURRENT_PAGE } from "../constants"
 import { fetchDataListAndPagination } from "../utils"
-import { usePagination } from "./usePagination"
+import { usePagination } from "./use.pagination"
 
 export const useFetchDataListAndPagination = (fetchParameter) => {
   const [dataList, setDataList] = useState([])
@@ -11,7 +11,8 @@ export const useFetchDataListAndPagination = (fetchParameter) => {
   
   const asyncFetching = async () => {
     const { dataList, pagination } = await fetchDataListAndPagination({ ...fetchParameter, page: currentPage })
-    const perPage = fetchParameter?.take ?? 1 // 한번에 보여져야할 페이지 수
+    if (!dataList.length) return
+    const perPage = pagination?.endPage - pagination?.startPage + 1
     registerPaginationParams({ ...pagination, perPage })
     setDataList(dataList)
   }

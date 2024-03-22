@@ -11,14 +11,20 @@ export const usePagination = () => {
 	const [params, setParams] = useSearchParams()
 
 	const checkIsPrevButtonVisible = () => {
-    const startPage = parseInt(params.get(PARAM_START_PAGE))
-		return startPage !== 1
+		const startPage = params.get(PARAM_START_PAGE)
+		return !!startPage && parseInt(startPage) !== 1
 	}
 	const checkIsNextButtonVisible = () => {
-		const currentPage = parseInt(params.get(PARAM_CURRENT_PAGE))
-		const totalPage = parseInt(params.get(PARAM_TOTAL_PAGE))
-		const perPage = parseInt(params.get(PARAM_PER_PAGE))
-		return Math.ceil(currentPage / perPage) !== Math.ceil(totalPage / perPage)
+		const currentPage = params.get(PARAM_CURRENT_PAGE)
+		const totalPage = params.get(PARAM_TOTAL_PAGE)
+		const perPage = params.get(PARAM_PER_PAGE)
+
+		return (
+			!!currentPage &&
+			!!totalPage &&
+			!!perPage &&
+			(Math.ceil(+currentPage / +perPage) !== Math.ceil(+totalPage / +perPage))
+		)
 	}
 	const getPaginationParam = (paramKey, defaultValue = 1) => {
 		if (!params.has(paramKey)) return defaultValue

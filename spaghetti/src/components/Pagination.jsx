@@ -1,5 +1,5 @@
 import { PARAM_END_PAGE, PARAM_START_PAGE } from '../constants'
-import { usePagination } from '../hooks/usePagination'
+import { usePagination } from '../hooks/use.pagination'
 
 const Pagination = () => {
 	const {

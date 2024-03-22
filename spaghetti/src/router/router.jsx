@@ -3,15 +3,15 @@ import HomePage from "../pages/Home";
 import PostDetailPage from "../pages/Post.Detail";
 import PostListPage from "../pages/Post.List";
 import AuthRoute from "./Auth.Route";
-import { postDetailLoader } from "./loader";
+import { postDetailLoader, weatherLoader } from "./loader";
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <HomePage/>
+    path: '/home',
+    element: <HomePage />,
+    loader: weatherLoader
   },
   {
-    path: '/',
     element: <AuthRoute />,
     children: [
       {

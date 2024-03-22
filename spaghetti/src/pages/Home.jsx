@@ -1,51 +1,29 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { DIALOG_STATE, LOCAL_KEY_AUTH } from '../constants';
+import { DIALOG_STATE } from '../constants';
 import { useDialogStore } from "../contexts/DialogProvider";
-import { weatherConfig } from "../third-party/weather.config";
+import { useAuthorization } from "../hooks/use.authorization";
 
 
 const HomePage = () => {
-  const [isBackGroundBlur, setIsBackGroundBlur] = useState(true);
-  const [weather, setWeather] = useState();
-  const {onOpenDialog} = useDialogStore();
+  const { weather } = useLoaderData()
+  const { onOpenDialog, onCloseDialog } = useDialogStore();
+  const { isAuthorized, authorize } = useAuthorization();
+  const navigate = useNavigate();
 
-  const fetchWeather = async () => {
-    try {
-      const response = await axios.get("/getUltraSrtNcst", {
-        baseURL: weatherConfig.api,
-        params: {
-          serviceKey: weatherConfig.secret_key,
-          dataType: "JSON",
-          base_date: new Date()
-            .toISOString()
-            .substring(0, 10)
-            .replace(/-/g, ""),
-          base_time: "0600",
-          nx: 60,
-          ny: 127,
-        },
-      });
-      setWeather(response.data.response.body.items.item);
-    } catch (err) {
-      console.log(err);
-      throw new Error("failed load weather api");
-    }
-  };
-
-  useEffect(() => {
-    fetchWeather();
-    const auth = localStorage.getItem(LOCAL_KEY_AUTH);
-    if (!auth) return setIsBackGroundBlur(true);
-  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
     const userName = e.target.userName.value.trim();
-    if (!userName) return alert("이름을 입력해주세요");
-    localStorage.setItem(LOCAL_KEY_AUTH, userName);
-    setIsBackGroundBlur(false);
+    if (!userName) {
+      onOpenDialog({
+        type: DIALOG_STATE.ALERT,  
+        text: "이름을 입력해주세요.",
+        onConfirm: onCloseDialog,
+      })
+      return
+    }
+    authorize(userName)
     e.target.userName.value = "";
   };
 
@@ -54,14 +32,15 @@ const HomePage = () => {
       type: DIALOG_STATE.ALERT,  
       text: "정말로 페이지를 이동하겠습니까",
       onConfirm: () => {
-        window.location.href = "/posts";
+        navigate("/posts")
+        onCloseDialog()
       }
     })
   };
 
   return (
     <>
-      {isBackGroundBlur && (
+      {!isAuthorized && (
         <S.BlurBackGround>
           <S.UserNameForm onSubmit={onSubmit}>
             <input type="text" name="userName" placeholder="Enter your name" />
@@ -72,7 +51,7 @@ const HomePage = () => {
       <div>
         <h1>Home Page</h1>
         <p>오늘의 기온</p>
-        <p>{weather?.find((el) => el.category === "T1H").obsrValue}도</p>
+        <p>{weather?.find((el) => el.category === "T1H")?.obsrValue}도</p>
         <S.Button onClick={onPressNavigateBlog}>블로그 보러가기</S.Button>
       </div>
     </>

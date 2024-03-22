@@ -1,4 +1,9 @@
-import { fetchPostDetailById } from "../utils"
+import { fetchPostDetailById, fetchWeather } from "../utils";
+
+export const weatherLoader = async () => {
+  const weather = await fetchWeather()
+  return {weather}
+}
 
 export const postDetailLoader = async ({params}) => {
   const postId = params.postId
