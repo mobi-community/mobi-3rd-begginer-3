@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { useFetchPageNation, useURLManipulator } from "../hooks"
 
 const PageNation = ({ path }) => {

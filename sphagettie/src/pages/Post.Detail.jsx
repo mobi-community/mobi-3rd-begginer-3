@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { useFetchComment, useFetchDetail, useURLManipulator } from "../hooks"
+import { useEffect} from "react"
+import { useFetchComment, useFetchDetail} from "../hooks"
 import PageNation from "../components/PageNation"
 import { checkUserAuth } from "../utils"
 
