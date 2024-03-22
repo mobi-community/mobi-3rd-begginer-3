@@ -1,78 +1,83 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import CommentPageNation from "../components/pagenation/Pagenation.Comment";
 import { useSearchParams } from "react-router-dom";
+import { commentsApi, postDetailApi } from "../libs/axios/api";
+import GenericPageNation from "../components/pagenation/pagenation.Generic";
+import { useDispatch, useSelector } from "react-redux";
+import { setLimitTake } from "../libs/redux/actions";
 
-const LIMIT_TAKE = 20;
 const PostDetailPage = () => {
-  const [params] = useSearchParams();
-  const [postDetail, setPostDetail] = useState([]);
-  const [commentList, setCommentList] = useState([]);
-  const [isOpenCommentList, setIsOpenCommentList] = useState(false);
+    const [params] = useSearchParams();
+    const [postDetail, setPostDetail] = useState([]);
+    const [commentList, setCommentList] = useState([]);
+    const [isOpenCommentList, setIsOpenCommentList] = useState(false);
+    const dispatch = useDispatch();
+    const { limitTake } = useSelector((state) => state.pageNation);
 
-  const fetchPostDetail = async () => {
-    const response = await axios.get("/api/post");
-    setPostDetail(response.data);
-  };
+    useEffect(() => {
+        dispatch(setLimitTake(20));
+    }, [dispatch]);
 
-  const fetchComments = async () => {
-    const response = await axios.get("/api/comments", {
-      params: {
-        take: params.get("take") ?? LIMIT_TAKE,
-      },
-    });
-    console.log(response.data);
-    setCommentList(response.data.Comments);
-  };
+    const fetchPostDetail = async () => {
+        const fetchData = await postDetailApi();
+        setPostDetail(fetchData);
+    };
 
-  const onClickMoreComments = async () => {
-    setIsOpenCommentList(true);
-    fetchComments();
-  };
+    const fetchComments = async () => {
+        const fetchData = await commentsApi({
+            params: params,
+            limitTake: limitTake,
+        });
+        setCommentList(fetchData);
+    };
 
-  const onClickHiddenComments = () => {
-    setIsOpenCommentList(false);
-  };
+    const onClickMoreComments = async () => {
+        setIsOpenCommentList(true);
+        fetchComments();
+    };
 
-  useEffect(() => {
-    const userName = localStorage.getItem("userName");
-    if (!userName) {
-      alert("로그인이 필요합니다");
-      window.location.href = "/";
-    }
-    fetchPostDetail();
-  }, []);
+    const onClickHiddenComments = () => {
+        setIsOpenCommentList(false);
+    };
 
-  useEffect(() => {
-    if (!isOpenCommentList) return;
-    fetchComments();
-  }, [params]);
+    useEffect(() => {
+        const userName = localStorage.getItem("userName");
+        if (!userName) {
+            alert("로그인이 필요합니다");
+            window.location.href = "/";
+        }
+        fetchPostDetail();
+    }, []);
 
-  return (
-    <div>
-      <h1>Post Detail Page</h1>
-      <div>
-        <p>제목: {postDetail.title}</p>
-        <p>내용: {postDetail.content}</p>
-        {!isOpenCommentList && (
-          <button onClick={onClickMoreComments}>댓글 보기</button>
-        )}
-        {isOpenCommentList && (
-          <button onClick={onClickHiddenComments}>댓글 숨기기</button>
-        )}
-        {isOpenCommentList && (
-          <>
-            {commentList.map((comment) => (
-              <div key={comment.id}>
-                <p>{comment.content}</p>
-                <p>{comment.User.nickName}</p>
-              </div>
-            ))}
-            <CommentPageNation />
-          </>
-        )}
-      </div>
-    </div>
-  );
+    useEffect(() => {
+        if (!isOpenCommentList) return;
+        fetchComments();
+    }, [params]);
+
+    return (
+        <div>
+            <h1>Post Detail Page</h1>
+            <div>
+                <p>제목: {postDetail.title}</p>
+                <p>내용: {postDetail.content}</p>
+                {!isOpenCommentList && (
+                    <button onClick={onClickMoreComments}>댓글 보기</button>
+                )}
+                {isOpenCommentList && (
+                    <button onClick={onClickHiddenComments}>댓글 숨기기</button>
+                )}
+                {isOpenCommentList && (
+                    <>
+                        {commentList.map((comment) => (
+                            <div key={comment.id}>
+                                <p>{comment.content}</p>
+                                <p>{comment.User.nickName}</p>
+                            </div>
+                        ))}
+                        <GenericPageNation apiUrl={"/comments"} />
+                    </>
+                )}
+            </div>
+        </div>
+    );
 };
 export default PostDetailPage;
