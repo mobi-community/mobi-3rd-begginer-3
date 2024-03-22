@@ -10,18 +10,23 @@ const PostDetailPage = () => {
     const [postDetail, setPostDetail] = useState([]);
     const [commentList, setCommentList] = useState([]);
     const [isOpenCommentList, setIsOpenCommentList] = useState(false);
+    // dispatch 함수를 사용
     const dispatch = useDispatch();
+    // store에서 페이지네이션 설정을 가져옴
     const { limitTake } = useSelector((state) => state.pageNation);
 
+    // 마운트될 때 페이지네이션 limit값 설정
     useEffect(() => {
         dispatch(setLimitTake(20));
     }, [dispatch]);
 
+    // fetchPostDetail api 호출
     const fetchPostDetail = async () => {
         const fetchData = await postDetailApi();
         setPostDetail(fetchData);
     };
 
+    // fetchComments api 호출
     const fetchComments = async () => {
         const fetchData = await commentsApi({
             params: params,

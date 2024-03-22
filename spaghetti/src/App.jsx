@@ -1,12 +1,13 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import PostListPage from "./pages/Post.list";
-import PostDetailPage from "./pages/Post.detail";
+
 import "./app.css";
 import HomePage from "./pages/Home";
 import DiaLogProvider from "./contexts/DialogProvider";
 import { worker } from "./__mock__/browser";
 import store from "./libs/redux/store";
+import PostListPage from "./pages/Post.List";
+import PostDetailPage from "./pages/Post.Detail";
 
 function App() {
     const router = createBrowserRouter([

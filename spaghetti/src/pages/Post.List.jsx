@@ -10,9 +10,12 @@ const PostListPage = () => {
     const [params] = useSearchParams();
     const [postList, setPostList] = useState([]);
     const [, setDiaLogAttribute] = useDiaLogStore();
+    // dispatch 함수를 사용
     const dispatch = useDispatch();
+    // store에서 페이지네이션 설정을 가져옴
     const { limitTake } = useSelector((state) => state.pageNation);
 
+    // 마운트될 때 페이지네이션의 limit값들을 설정.
     useEffect(() => {
         dispatch(setLimitTake(10));
     }, [dispatch]);
