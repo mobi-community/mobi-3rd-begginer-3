@@ -1,52 +1,37 @@
 import { useEffect } from "react"
-import { KEY } from "../const"
-import { useFetchData } from "../hooks/use-fetch-data"
+import { useFetchPageNation, useURLManipulator } from "../hooks"
 
-const PageNation = ({ address }) => {
-  const {
-    getParamValues,
-    setParamValues,
-    fetchDataByFormAndAdd,
-    postData: pageNation,
-  } = useFetchData()
-
-  const { page, take, limit } = getParamValues()
-
-  useEffect(() => {
-    fetchDataByFormAndAdd({
-      form: "PageNation",
-      address: address,
-    })
-  }, [page])
+const PageNation = ({ path }) => {
+  const { pageNation } = useFetchPageNation({ path })
+  const { getParamValues, setParamValues } = useURLManipulator()
+  const { take, limit } = getParamValues()
 
   const onClickPage = ({ page }) => {
     setParamValues({ page, take, limit })
   }
-  if (!pageNation) return
 
-  const isPrevPageVisible = pageNation.startPage !== 1
-  const isNextPageVisible =
-    pageNation.startPage + parseInt(take) < pageNation.totalPage
+  if (!pageNation) return
+  const { startPage, totalPage, endPage } = pageNation
+  const isPrevPageVisible = startPage !== 1
+  const isNextPageVisible = startPage + parseInt(take) < totalPage
 
   return (
     <div>
       {isPrevPageVisible && (
-        <button onClick={() => onClickPage({ page: pageNation.startPage - 1 })}>
+        <button onClick={() => onClickPage({ page: startPage - 1 })}>
           이전
         </button>
       )}
-      {Array(pageNation.endPage - pageNation.startPage + 1)
+      {Array(endPage - startPage + 1)
         .fill()
-        .map((_, i) => pageNation.startPage + i)
+        .map((_, i) => startPage + i)
         .map((page) => (
           <button key={page} onClick={() => onClickPage({ page: page })}>
             {page}
           </button>
         ))}
       {isNextPageVisible && (
-        <button onClick={() => onClickPage({ page: pageNation.endPage + 1 })}>
-          다음
-        </button>
+        <button onClick={() => onClickPage({ page: endPage + 1 })}>다음</button>
       )}
     </div>
   )

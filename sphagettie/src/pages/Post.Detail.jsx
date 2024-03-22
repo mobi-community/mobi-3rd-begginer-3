@@ -1,46 +1,21 @@
 import { useEffect, useState } from "react"
-import { useFetchData } from "../hooks/use-fetch-data"
+import { useFetchComment, useFetchDetail, useURLManipulator } from "../hooks"
 import PageNation from "../components/PageNation"
 import { checkUserAuth } from "../utils"
 
 const PostDetailPage = () => {
-  const [isOpenCommentList, setIsOpenCommentList] = useState(false)
+  const { postDetail } = useFetchDetail()
   const {
-    setParamValues,
-    getParamValues,
-    fetchDataByFormAndAdd,
-    fetchPostDetail,
-    postData: commentList,
-    postDetail,
-  } = useFetchData()
+    commentList,
+    onClickMoreComments,
+    onClickHiddenComments,
+    isOpenCommentList,
+  } = useFetchComment()
 
   useEffect(() => {
     checkUserAuth()
-    fetchPostDetail()
-    setParamValues({ page: 1, take: 10, limit: 10 })
   }, [])
 
-  const { page } = getParamValues()
-
-  useEffect(() => {
-    if (!isOpenCommentList) return
-    fetchDataByFormAndAdd({
-      form: "Comments",
-      address: "comments",
-    })
-  }, [page])
-
-  const onClickMoreComments = async () => {
-    setIsOpenCommentList(true)
-    await fetchDataByFormAndAdd({
-      form: "Comments",
-      address: "comments",
-    })
-  }
-
-  const onClickHiddenComments = () => {
-    setIsOpenCommentList(false)
-  }
   if (!postDetail) return
   return (
     <div>
@@ -59,7 +34,7 @@ const PostDetailPage = () => {
                 <p>{comment.User.nickName}</p>
               </div>
             ))}
-            <PageNation address="comments" />
+            <PageNation path="comments" />
           </>
         )}
       </div>
