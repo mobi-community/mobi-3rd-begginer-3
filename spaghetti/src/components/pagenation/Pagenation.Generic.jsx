@@ -11,11 +11,14 @@ import { pageNationApi } from "../../libs/axios/api";
  * @description
  * 기존 Pagenation.Posts와 Pagenation.Comments를 합쳐서 관리하는 범용 컴포넌트 입니다.
  */
+
 const GenericPageNation = ({ apiUrl }) => {
     const [params, setParams] = useSearchParams();
     const [pageNation, setPageNation] = useState();
+
     // dispatch 함수를 사용
     const dispatch = useDispatch();
+
     // store에서 페이지네이션 설정을 가져옴
     const { limitPage, limitTake } = useSelector((state) => state.pageNation);
 

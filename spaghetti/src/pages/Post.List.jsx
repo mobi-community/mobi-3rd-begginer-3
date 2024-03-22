@@ -4,7 +4,8 @@ import { useSearchParams } from "react-router-dom";
 import { postListApi } from "../libs/axios/api";
 import { useDispatch, useSelector } from "react-redux";
 import { setLimitTake } from "../libs/redux/actions";
-import GenericPageNation from "../components/pagenation/pagenation.Generic";
+import PostListUi from "../features/post/postListUi";
+import useAuthCheck from "../hooks/useAuthCheck";
 
 const PostListPage = () => {
     const [params] = useSearchParams();
@@ -14,6 +15,9 @@ const PostListPage = () => {
     const dispatch = useDispatch();
     // store에서 페이지네이션 설정을 가져옴
     const { limitTake } = useSelector((state) => state.pageNation);
+
+    // 사용자 인증 훅 실행
+    useAuthCheck();
 
     // 마운트될 때 페이지네이션의 limit값들을 설정.
     useEffect(() => {
@@ -30,14 +34,6 @@ const PostListPage = () => {
         };
         fetchPostList();
     }, [params]);
-
-    useEffect(() => {
-        const userName = localStorage.getItem("userName");
-        if (!userName) {
-            alert("로그인이 필요합니다");
-            window.location.href = "/";
-        }
-    }, []);
 
     const onClickPost = async (postId) => {
         await setDiaLogAttribute({
@@ -58,23 +54,6 @@ const PostListPage = () => {
         });
     };
 
-    return (
-        <table>
-            <caption>Post List Page</caption>
-            <tr>
-                <th>제목</th>
-                <th>내용</th>
-                <th>작성자</th>
-            </tr>
-            {postList.map((post) => (
-                <tr key={post.id} onClick={() => onClickPost(post.id)}>
-                    <td>{post.title}</td>
-                    <td>{post.content}</td>
-                    <td>{post.User.nickName}</td>
-                </tr>
-            ))}
-            <GenericPageNation apiUrl={"/posts"} />
-        </table>
-    );
+    return <PostListUi postList={postList} onClickPost={onClickPost} />;
 };
 export default PostListPage;

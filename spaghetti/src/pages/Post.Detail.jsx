@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { commentsApi, postDetailApi } from "../libs/axios/api";
-import GenericPageNation from "../components/pagenation/pagenation.Generic";
 import { useDispatch, useSelector } from "react-redux";
 import { setLimitTake } from "../libs/redux/actions";
+import PostDetailUi from "../features/post/postDetailUi";
+import useAuthCheck from "../hooks/useAuthCheck";
 
 const PostDetailPage = () => {
     const [params] = useSearchParams();
     const [postDetail, setPostDetail] = useState([]);
     const [commentList, setCommentList] = useState([]);
     const [isOpenCommentList, setIsOpenCommentList] = useState(false);
+
+    useAuthCheck();
+
     // dispatch 함수를 사용
     const dispatch = useDispatch();
+
     // store에서 페이지네이션 설정을 가져옴
     const { limitTake } = useSelector((state) => state.pageNation);
 
@@ -45,11 +50,6 @@ const PostDetailPage = () => {
     };
 
     useEffect(() => {
-        const userName = localStorage.getItem("userName");
-        if (!userName) {
-            alert("로그인이 필요합니다");
-            window.location.href = "/";
-        }
         fetchPostDetail();
     }, []);
 
@@ -59,30 +59,13 @@ const PostDetailPage = () => {
     }, [params]);
 
     return (
-        <div>
-            <h1>Post Detail Page</h1>
-            <div>
-                <p>제목: {postDetail.title}</p>
-                <p>내용: {postDetail.content}</p>
-                {!isOpenCommentList && (
-                    <button onClick={onClickMoreComments}>댓글 보기</button>
-                )}
-                {isOpenCommentList && (
-                    <button onClick={onClickHiddenComments}>댓글 숨기기</button>
-                )}
-                {isOpenCommentList && (
-                    <>
-                        {commentList.map((comment) => (
-                            <div key={comment.id}>
-                                <p>{comment.content}</p>
-                                <p>{comment.User.nickName}</p>
-                            </div>
-                        ))}
-                        <GenericPageNation apiUrl={"/comments"} />
-                    </>
-                )}
-            </div>
-        </div>
+        <PostDetailUi
+            postDetail={postDetail}
+            isOpenCommentList={isOpenCommentList}
+            onClickMoreComments={onClickMoreComments}
+            onClickHiddenComments={onClickHiddenComments}
+            commentList={commentList}
+        />
     );
 };
 export default PostDetailPage;
