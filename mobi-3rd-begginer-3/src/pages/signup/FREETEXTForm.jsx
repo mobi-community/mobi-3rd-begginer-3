@@ -3,10 +3,9 @@ import schema from "../../components/commons/yupValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../../components/commons/input";
 import * as yup from "yup";
-import { useEffect, useState } from "react";
+import { Button } from "@mui/material";
 
-const FREETXTForm = ({ freetext, updateForms, disabled }) => {
-    const [formIsValid, setFormIsValid] = useState(false);
+const FREETXTForm = ({ updateForms, next, prev, isLastStep }) => {
     const freetextSchema = yup.object().shape({
         freetext: schema.fields.freetext,
     });
@@ -14,46 +13,30 @@ const FREETXTForm = ({ freetext, updateForms, disabled }) => {
     const {
         register,
         handleSubmit,
-        isValid,
-        watch,
         formState: { errors },
     } = useForm({ mode: "onChange", resolver: yupResolver(freetextSchema) });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        updateForms({ [name]: value });
-        console.log(updateForms, "updateForms");
-    };
 
     const onSubmit = (data) => {
         updateForms(data);
     };
 
-    // const emailValue = watch("email");
-    // const passwordValue = watch("password");
     return (
         <>
             <div>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form>
                     <label htmlFor="freetext">FreeText</label>
                     <Input
+                        type={"text"}
                         register={register}
                         registerKey="freetext"
                         size="large"
-                        name="freetext"
-                        value={freetext}
-                        color="lemon"
-                        onChange={handleChange}
+                        color="green"
                         errors={errors}
-                        validate={isValid}
                     />
-                    {/* <input
-                        id="freetext"
-                        name="freetext"
-                        value={freetext}
-                        onChange={handleChange}
-                    /> */}
-                    {errors.freetext && <p>{errors.freetext?.message}</p>}
+                    <Button onClick={prev}>Prev</Button>
+                    <Button onClick={next}>
+                        {isLastStep ? "Submit" : "Next"}
+                    </Button>
                 </form>
             </div>
         </>

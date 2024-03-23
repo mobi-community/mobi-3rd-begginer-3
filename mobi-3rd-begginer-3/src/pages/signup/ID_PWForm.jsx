@@ -3,26 +3,19 @@ import schema from "../../components/commons/yupValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../../components/commons/input";
 import * as yup from "yup";
-import { useEffect, useState } from "react";
+import { Button } from "@mui/material";
 
-const ID_PWForm = ({ email, password, updateForms }) => {
+const IdPwForm = ({ updateForms, next, isLastStep }) => {
     const idpwSchema = yup.object().shape({
         email: schema.fields.email,
+        password: schema.fields.password,
     });
 
     const {
         register,
         handleSubmit,
-        isValid,
-        watch,
         formState: { errors },
     } = useForm({ mode: "onChange", resolver: yupResolver(idpwSchema) });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        updateForms({ [name]: value });
-        console.log(updateForms, "updateForms");
-    };
 
     const onSubmit = (data) => {
         updateForms(data);
@@ -37,22 +30,21 @@ const ID_PWForm = ({ email, password, updateForms }) => {
                     register={register}
                     registerKey="email"
                     size="medium"
-                    name="email"
-                    value={email}
                     color="lemon"
                     errors={errors}
-                    // validate={isValid}
                 />
-                {/* {errors.email && <p>{errors.email.message}</p>} */}
                 <label htmlFor="password">Password</label>
-                <input
-                    id="password"
-                    name="password"
-                    value={password}
-                    onChange={handleChange}
+                <Input
+                    type={"password"}
+                    register={register}
+                    registerKey="password"
+                    size="medium"
+                    color="lemon"
+                    errors={errors}
                 />
+                <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button>
             </form>
         </>
     );
 };
-export default ID_PWForm;
+export default IdPwForm;

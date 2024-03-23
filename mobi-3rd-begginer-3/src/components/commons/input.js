@@ -5,7 +5,6 @@ const Input = ({
     placeholder,
     size,
     color,
-    name,
     registerKey = "",
     register,
     validate = {},

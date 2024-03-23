@@ -68,8 +68,8 @@ const INPUT = {
         height: "50px",
     },
     large: {
-        width: "200px",
-        height: "50px",
+        width: "500px",
+        height: "200px",
     },
 };
 

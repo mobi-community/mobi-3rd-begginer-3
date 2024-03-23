@@ -1,28 +1,47 @@
-const PHONE_BIRTHForm = ({ phoneNumber, birthDay, updateForms }) => {
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        updateForms({ [name]: value });
-    };
+import Input from "../../components/commons/input";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import schema from "../../components/commons/yupValidation";
+import { useForm } from "react-hook-form";
+import { Button } from "@mui/material";
+
+const PhoneBirthForm = ({ next, prev, isLastStep, updateForms }) => {
+    const phoneNumSchema = yup.object().shape({
+        phone: schema.fields.phone,
+        birthday: schema.fields.birthday,
+    });
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ mode: "onChange", resolver: yupResolver(phoneNumSchema) });
 
     return (
         <>
-            <div>
-                <label htmlFor="phoneNumber">PhoneNumber</label>
-                <input
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={phoneNumber}
-                    onChange={handleChange}
+            <form>
+                <label htmlFor="phone">PhoneNumber</label>
+                <Input
+                    type={"text"}
+                    register={register}
+                    registerKey="phone"
+                    size="medium"
+                    color="teal"
+                    errors={errors}
                 />
-                <label htmlFor="birthDay">BirthDay</label>
-                <input
-                    id="birthDay"
-                    name="birthDay"
-                    value={birthDay}
-                    onChange={handleChange}
+                <label htmlFor="birthday">BirthDay</label>
+                <Input
+                    type={"text"}
+                    register={register}
+                    registerKey="birthday"
+                    size="medium"
+                    color="teal"
+                    errors={errors}
                 />
-            </div>
+                <Button onClick={prev}>Prev</Button>
+                <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button>
+            </form>
         </>
     );
 };
-export default PHONE_BIRTHForm;
+export default PhoneBirthForm;
