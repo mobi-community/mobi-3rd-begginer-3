@@ -1,3 +1,5 @@
-export const Box = () => {
-     return <div></div>
+export const Box = ({ width, height, padding }) => {
+     return (
+          <div style={{ width: width, height: height, padding: padding }}></div>
+     )
 }
