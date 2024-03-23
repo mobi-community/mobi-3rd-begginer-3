@@ -10,9 +10,14 @@ export const secondSignupSchema = Yup.object().shape({
             /^\d{4}-\d{2}-\d{2}$/,
             "생년월일은 YYYY-MM-DD 형식이여야 합니다."
         )
-        .test(
-            "is-date",
-            "유효한 날짜를 입력해주세요.",
-            (value) => !isNaN(Date.parse(value))
-        ),
+        .test("is-date", "유효한 날짜를 입력해주세요.", (value) => {
+            if (!value) return false;
+            const [year, month, day] = value.split("-").map(Number);
+            const date = new Date(year, month - 1, day);
+            return (
+                date.getFullYear() === year &&
+                date.getMonth() === month - 1 &&
+                date.getDate() === day
+            );
+        }),
 });
