@@ -12,6 +12,12 @@ const Dialog = React.forwardRef(
         {type === DIALOG_STATE.CONFIRM && (
           <S.Button onClick={onCancel}>취소</S.Button>
         )}
+
+        <div>
+          {/* sadasdfdasf
+          asdfadsf
+          f */}
+        </div>
       </S.Wrapper>
     );
   }

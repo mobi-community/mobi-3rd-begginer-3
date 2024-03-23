@@ -1,8 +1,9 @@
 import {Button, Input} from '@/components/common'
 import {FORM_REGISTER_EMAIL, FORM_REGISTER_PASSWORD} from '@/constants'
 import {useManageSingleParams} from '@/hooks'
+import {getFormErrorArray} from '@/utils'
 import {yupResolver} from '@hookform/resolvers/yup'
-import { useEffect } from 'react'
+import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 import {useNavigate} from 'react-router-dom'
 import * as yup from 'yup'
@@ -31,30 +32,17 @@ export const ID_PW = () => {
 		mode: 'onChange',
 		resolver: yupResolver(schema),
 	})
-
 	const {getParams, setParams} = useManageSingleParams()
 	const navi = useNavigate()
 
-
 	useEffect(() => {
-		setValue(FORM_REGISTER_EMAIL,getParams())
-	},[])
+		// 현재 페이지에서 이미 기록된 값이 있다면, input 태그에 삽입
+		const savedParams = getParams([FORM_REGISTER_EMAIL, FORM_REGISTER_PASSWORD])
+		setValue(FORM_REGISTER_EMAIL, savedParams[0])
+		setValue(FORM_REGISTER_PASSWORD, savedParams[1])
+	}, [])
 
-	const params = getParams([
-		{
-			paramKey: FORM_REGISTER_EMAIL,
-			paramValue: '',
-		},
-		{
-			paramKey: FORM_REGISTER_PASSWORD,
-			paramValue: '',
-		},
-	])
-
-	const errorInfoArray = Object.entries(errors)?.map((error) => ({
-		key: error[0],
-		message: error[1].message,
-	}))
+	const formErrorArray = getFormErrorArray(errors)
 
 	const onSubmit = (data: {email: string; password: string}) => {
 		setParams([
@@ -80,22 +68,20 @@ export const ID_PW = () => {
 			<div className='flex flex-col items-start justify-center gap-5  w-[30rem] h-[30rem]'>
 				<Input
 					scale='full'
-					defaultValue={params[0]}
 					{...register(FORM_REGISTER_EMAIL)}
 					placeholder='email'
 				/>
 				<Input
 					scale='full'
-					defaultValue={params[1]}
 					{...register(FORM_REGISTER_PASSWORD)}
 					placeholder='password'
 					type='password'
 					// type='password'
 				/>
 				<div>
-					{errorInfoArray.map((errorInfo) => (
-						<p key={errorInfo.key} className='text-ti text-red-600'>
-							{errorInfo.key} : {errorInfo.message}
+					{formErrorArray.map((formError) => (
+						<p key={formError.formKey} className='text-ti text-red-600'>
+							{formError.formKey} : {formError.errorMessage}
 						</p>
 					))}
 				</div>

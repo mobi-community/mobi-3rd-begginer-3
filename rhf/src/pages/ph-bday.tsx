@@ -1,9 +1,9 @@
-import {
-	FORM_REGISTER_BIRTHDAY,
-	FORM_REGISTER_EMAIL,
-	FORM_REGISTER_PHONE_NUMBER,
-} from '@/constants'
+import {Button, Input} from '@/components/common'
+import {FORM_REGISTER_BIRTHDAY, FORM_REGISTER_PHONE_NUMBER} from '@/constants'
+import {useManageSingleParams} from '@/hooks'
+import {getFormErrorArray} from '@/utils'
 import {yupResolver} from '@hookform/resolvers/yup'
+import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 import {useLocation, useNavigate} from 'react-router-dom'
 import * as yup from 'yup'
@@ -26,53 +26,67 @@ const schema = yup.object().shape({
 export const PH_BDAY = () => {
 	const {
 		register,
+		setValue,
 		handleSubmit,
 		formState: {errors},
 	} = useForm({mode: 'onChange', resolver: yupResolver(schema)})
-
-	const location = useLocation()
+	const {getParams, setParams} = useManageSingleParams()
 	const navi = useNavigate()
+	const location = useLocation()
 
-	const errorInfoArray = Object.entries(errors)?.map((error) => ({
-		key: error[0],
-		message: error[1].message,
-	}))
+	useEffect(() => {
+		// 현재 페이지에서 이미 기록된 값이 있다면, input 태그에 삽입
+		const savedParams = getParams([
+			FORM_REGISTER_PHONE_NUMBER,
+			FORM_REGISTER_BIRTHDAY,
+		])
+		setValue(FORM_REGISTER_PHONE_NUMBER, savedParams[0])
+		setValue(FORM_REGISTER_BIRTHDAY, savedParams[1])
+	}, [])
 
-	const onClickNextStep = () => {
-		// navi('/cmt', {
-		// 	state: {
-		// 		[FORM_REGISTER_PHONE_NUMBER]:
-		// 	}
-		// })
+	const formErrorArray = getFormErrorArray(errors)
+
+	const onSubmit = (data: {
+		[FORM_REGISTER_PHONE_NUMBER]: string
+		[FORM_REGISTER_BIRTHDAY]: string
+	}) => {
+		setParams([
+			{
+				paramKey: FORM_REGISTER_PHONE_NUMBER,
+				paramValue: data[FORM_REGISTER_PHONE_NUMBER],
+			},
+			{
+				paramKey: FORM_REGISTER_BIRTHDAY,
+				paramValue: data[FORM_REGISTER_BIRTHDAY],
+			},
+		])
+		navi('/cmt', {
+			state: {
+				...location?.state,
+				[FORM_REGISTER_PHONE_NUMBER]: data[FORM_REGISTER_PHONE_NUMBER],
+				[FORM_REGISTER_BIRTHDAY]: data[FORM_REGISTER_BIRTHDAY],
+			},
+		})
 	}
 
-	const onClickButton = () => {
-		navi('/cmt')
-	}
-	const onClickBackButton = () => {
-		navi(-1)
-	}
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className='flex flex-col items-start justify-center gap-5  w-[30rem] h-[30rem]'>
 				<Input
 					scale='full'
-					defaultValue={params[0]}
-					{...register(FORM_REGISTER_EMAIL)}
-					placeholder='email'
+					{...register(FORM_REGISTER_PHONE_NUMBER)}
+					placeholder={FORM_REGISTER_PHONE_NUMBER}
 				/>
 				<Input
 					scale='full'
-					defaultValue={params[1]}
-					{...register(FORM_REGISTER_PASSWORD)}
-					placeholder='password'
-					type='password'
-					// type='password'
+					{...register(FORM_REGISTER_BIRTHDAY)}
+					placeholder={FORM_REGISTER_BIRTHDAY}
+					type='date'
 				/>
 				<div>
-					{errorInfoArray.map((errorInfo) => (
-						<p key={errorInfo.key} className='text-ti text-red-600'>
-							{errorInfo.key} : {errorInfo.message}
+					{formErrorArray.map((formError) => (
+						<p key={formError.formKey} className='text-ti text-red-600'>
+							{formError.formKey} : {formError.errorMessage}
 						</p>
 					))}
 				</div>

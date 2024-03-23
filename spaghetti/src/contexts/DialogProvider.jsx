@@ -7,7 +7,9 @@ const DialogContext = createContext()
 export const useDialogStore = () => useContext(DialogContext)
 
 export const DialogProvider = ({ children }) => {
+	
 	const dialogRef = useRef()
+
 	const [dialogAttribute, setDialogAttribute] = useState({
 		type: DIALOG_STATE.ALERT,
 		text: '',
