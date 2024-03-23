@@ -3,7 +3,6 @@ import useMultiStepForm from "../../components/hook/multiStep";
 import FREETXTForm from "./FREETEXTForm";
 import IdPwForm from "./ID_PWForm";
 import PhoneBirthForm from "./PHONE_BIRTHForm";
-import Button from "@mui/material/Button";
 
 const SignupPage = () => {
     const initialFormData = {
@@ -14,19 +13,10 @@ const SignupPage = () => {
         freetext: "",
     };
     const [formData, setFormData] = useState(initialFormData);
-    const [formIsValid, setFormIsValid] = useState(false);
     const updateForm = (form) => {
         setFormData((prev) => ({ ...prev, ...form }));
     };
-    const {
-        currentTitle,
-        currentStep,
-        prev,
-        next,
-        isFirstStep,
-        isLastStep,
-        isValid,
-    } = useMultiStepForm([
+    const { currentTitle, currentStep, prev, next } = useMultiStepForm([
         {
             title: "ID_PWForm",
             element: (
@@ -64,9 +54,7 @@ const SignupPage = () => {
     return (
         <>
             <div>signup</div>
-            {/* <Button onClick={prev}>Prev</Button> */}
             <span>{currentTitle}</span>
-            {/* <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button> */}
             {currentStep}
         </>
     );

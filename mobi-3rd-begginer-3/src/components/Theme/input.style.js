@@ -72,7 +72,8 @@ const inputSizeCss = {
 export const StyleInput = styled.input`
     border: 5px;
     ${({ color }) => inputColorCss[color].css}
-    ${({ size }) => inputSizeCss[size].css} /* &:active {
+    ${({ size }) => inputSizeCss[size].css} 
+    &:active {
         transform: scale(0.8);
-    } */
+    }
 `;

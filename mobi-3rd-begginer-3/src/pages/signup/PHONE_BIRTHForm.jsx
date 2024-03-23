@@ -5,7 +5,7 @@ import schema from "../../components/commons/yupValidation";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 
-const PhoneBirthForm = ({ next, prev, isLastStep, updateForms }) => {
+const PhoneBirthForm = ({ next, prev, isLastStep }) => {
     const phoneNumSchema = yup.object().shape({
         phone: schema.fields.phone,
         birthday: schema.fields.birthday,
