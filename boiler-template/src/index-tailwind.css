@@ -1,0 +1,63 @@
+@tailwind base;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-weight: 500;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  html {
+    font-size: 100%;
+    @apply bg-black text-white;
+  }
+
+  ul,
+  li {
+    list-style: none;
+  }
+
+  h1 {
+    @apply text-huge;
+  }
+
+  h2 {
+    @apply text-big  font-bold;
+  }
+
+  h2 {
+    @apply text-large font-bold;
+  }
+
+  h3 {
+    @apply text-medium font-bold;
+  }
+
+  h4 {
+    @apply text-small font-bold;
+  }
+
+  button {
+    @apply border-none outline-none;
+  }
+
+  input {
+    @apply outline-none;
+  }
+
+  textarea {
+    @apply text-small;
+  }
+
+  p,
+  div,
+  span {
+    @apply text-small;
+  }
+}
+@tailwind components;
+@tailwind utilities;

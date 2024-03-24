@@ -1,0 +1,5 @@
+// lint prettier 설정 
+
+1. npm i prettier --dev eslint --dev eslint-plugin-prettier --dev eslint-plugin-react --dev eslint-plugin-react-hooks --dev eslint-plugin-jsx-a11y --dev
+2. npm i eslint --init
+3. npm i eslint-plugin-react@latest
