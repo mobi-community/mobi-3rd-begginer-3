@@ -1,4 +1,4 @@
-const SubmitButton = ({ children, disable = true, ...rest }) => {
+const Button = ({ children, disable = true, ...rest }) => {
   return (
     <button
       disabled={!disable}
@@ -9,4 +9,4 @@ const SubmitButton = ({ children, disable = true, ...rest }) => {
     </button>
   )
 }
-export default SubmitButton
+export default Button

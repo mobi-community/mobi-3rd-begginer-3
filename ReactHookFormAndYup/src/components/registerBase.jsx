@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import SubmitButton from "./submitButton"
+import { Button } from "."
 
 const RegisterBase = ({
   handleSubmit,
@@ -21,17 +21,17 @@ const RegisterBase = ({
           <div className="text-[4rem] text-center w-fit h-fit">{title}</div>
           {RegisterForm}
           <div className="flex w-[80%] h-fit p-2 justify-between items-center">
-            <SubmitButton
+            <Button
               type="button"
               onClick={() => {
                 return navi(-1)
               }}
             >
               prev
-            </SubmitButton>
-            <SubmitButton type="submit" disable={isValid}>
+            </Button>
+            <Button type="submit" disable={isValid}>
               next
-            </SubmitButton>
+            </Button>
           </div>
         </form>
       </div>
