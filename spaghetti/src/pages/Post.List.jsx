@@ -7,6 +7,8 @@ import { setLimitTake } from "../libs/redux/actions";
 import PostListUi from "../features/post/postListUi";
 import useAuthCheck from "../hooks/useAuthCheck";
 
+// LIMIT_TAKE = 10
+// LIMIT_PAGE = 20
 const PostListPage = () => {
     const [params] = useSearchParams();
     const [postList, setPostList] = useState([]);
