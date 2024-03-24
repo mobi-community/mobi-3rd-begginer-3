@@ -20,20 +20,12 @@ const Step1 = ({ updateForm, next }) => {
     resolver: yupResolver(step1Schema),
   });
 
-  const formSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log("Form submitted data:", updateForm);
-  };
-
   const onClickNext = (data) => {
     updateForm(data);
-    sessionStorage.setItem("formData", JSON.stringify(data));
     next();
-    console.log(data);
   };
-
   return (
-    <Form onSubmit={formSubmitHandler}>
+    <Form onSubmit={onClickNext}>
       <InputGroup>
         <InputTitle>이메일</InputTitle>
         <TextField
@@ -77,7 +69,7 @@ const Step1 = ({ updateForm, next }) => {
         <ErrorText>{errors.passwordConfirm.message}</ErrorText>
       )}
       <Button
-        type="button"
+        type="submit"
         variant="outlined"
         onClick={handleSubmit(onClickNext)}
         disabled={!isValid}
