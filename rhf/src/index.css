@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+
+		@apply bg-transparent;
+		@apply text-white;
+		@apply text-base;
+		@apply font-normal;
+	}
+	html {
+		font-size: 62.5%;
+		@apply bg-gray-800;
+	}
+	h1 {
+		@apply text-xl;
+		@apply font-bold;
+	}
+	h2 {
+		@apply text-lg;
+		@apply font-bold;
+	}
+	h3 {
+		@apply text-bg;
+		@apply font-bold;
+	}
+	h4 {
+		@apply text-base;
+		@apply font-bold;
+	}
+	button {
+		border: none;
+	}
+	input {
+		outline: none;
+	}
+	ul,
+	li {
+		list-style: none;
+	}
+}
