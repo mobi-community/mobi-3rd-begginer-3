@@ -11,7 +11,12 @@ module.exports = {
 		ecmaVersion: 2020,
 		sourceType: "module",
 	},
-	plugins: ["react", "unused-imports", "simple-import-sort"],
+	plugins: [
+		"react",
+		"react-app/jest",
+		"unused-imports",
+		"simple-import-sort",
+	],
 	rules: {
 		"react/jsx-uses-vars": "error",
 		"react/jsx-uses-react": "error",

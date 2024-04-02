@@ -3,7 +3,7 @@ import RootLayout from "../../layouts/layout";
 import MultiStepSignUp from "../../pages/multistep-signUp";
 import RHFStep from "../../components/rhfStep1";
 
-const Router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
@@ -20,4 +20,4 @@ const Router = createBrowserRouter([
   },
 ]);
 
-export default Router;
+export default router;

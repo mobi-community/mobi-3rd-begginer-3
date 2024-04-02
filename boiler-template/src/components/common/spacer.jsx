@@ -17,7 +17,7 @@ const Spacer = ({ width, height, ...rest }) => {
 };
 export default Spacer;
 
-const SpacerContainer = styled.span`
+const SpacerContainer = styled.div`
 	display: block;
 	width: ${({ width }) => width}rem;
 	height: ${({ height }) => height}rem;
