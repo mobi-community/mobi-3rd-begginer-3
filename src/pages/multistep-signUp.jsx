@@ -5,6 +5,7 @@ import Step2 from "../components/step2";
 import Step3 from "../components/step3";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 export const INITIAL_FORMDATA = {
   email: "",
   password: "",
@@ -18,8 +19,26 @@ const MultiStepSignUp = () => {
   const [nextStep, setNextStep] = useState(null);
   const [prevStep, setPrevStep] = useState(null);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [changeFormData, setChangeFormData] = useState({});
+
+  const step = Number(searchParams.get("step") || 1);
+
+  useEffect(() => {
+    // sessionStorage에서 formData라는 키의 값을 가져와서 userData로 저장
+    const userData = sessionStorage.getItem("formData");
+    if (userData) {
+      // state에 객체 형태로 userData 저장
+      setFormData(JSON.parse(userData));
+    }
+  }, []);
+
   const updateForm = (form) => {
     setFormData((prev) => ({ ...prev, ...form }));
+    sessionStorage.setItem(
+      "formData",
+      JSON.stringify({ ...formData, ...form })
+    );
   };
 
   useEffect(() => {
@@ -70,6 +89,10 @@ const MultiStepSignUp = () => {
   //   e.preventDefault();
   //   console.log("Form submitted data:", formData);
   // };
+
+  const handleFormSubmit = () => {
+    alert(JSON.stringify(formData)); // 마지막 단계에서 데이터 확인
+  };
 
   return (
     <>

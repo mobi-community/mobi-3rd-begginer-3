@@ -8,30 +8,25 @@ import {
 } from "../libs/styled-components/displayStyle";
 import { useState } from "react";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { step3Schema } from "../libs/yup/schema/step3";
+import useUpdateForm from "../hooks/useUpdateForm";
 
-const Step3 = ({ updateForm, next, prev }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(step3Schema),
-  });
+const Step3 = ({ setFormData, formData, updateForm, next, prev }) => {
+  const { register, handleSubmit, onSubmit, errors, isValid } = useUpdateForm(
+    updateForm,
+    step3Schema,
+    next,
+    prev
+  );
 
-  const onClickPrev = (data) => {
-    prev();
-    console.log(data);
-  };
-
-  const onClickSignUp = (data) => {
-    updateForm(data);
-    sessionStorage.setItem("formData", JSON.stringify(data));
-    alert(data.message);
-    console.log(data);
+  const onClickSignUp = (form) => {
+    setFormData((prev) => ({ ...prev, ...form }));
+    sessionStorage.setItem(
+      "formData",
+      JSON.stringify({ ...formData, ...form })
+    );
+    const sessionData = JSON.parse(sessionStorage.getItem("formData"));
+    alert(JSON.stringify(sessionData));
   };
 
   const [currentLength, setCurrentLength] = useState(0);
@@ -73,11 +68,12 @@ const Step3 = ({ updateForm, next, prev }) => {
         />
       </InputGroup>
       {errors.message && <ErrorText>{errors.message.message}</ErrorText>}
+
       <ButtonGroup>
         <Button
           type="button"
           variant="outlined"
-          onClick={onClickPrev}
+          onClick={prev}
           sx={{ marginRight: "20px" }}
         >
           Prev

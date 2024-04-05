@@ -6,26 +6,26 @@ import {
   ErrorText,
   Form,
 } from "../libs/styled-components/displayStyle";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { step1Schema } from "../libs/yup/schema/step1";
+import useUpdateForm from "../hooks/useUpdateForm";
 
-const Step1 = ({ updateForm, next }) => {
-  const {
+const Step1 = ({ formData, next }) => {
+  /* const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(step1Schema),
-  });
+  }); */
+  const { register, handleSubmit, onSubmit, errors, isValid } = useUpdateForm(
+    formData,
+    step1Schema,
+    next
+  );
 
-  const onClickNext = (data) => {
-    updateForm(data);
-    next();
-  };
   return (
-    <Form onSubmit={onClickNext}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <InputGroup>
         <InputTitle>이메일</InputTitle>
         <TextField
@@ -68,12 +68,7 @@ const Step1 = ({ updateForm, next }) => {
       {errors.passwordConfirm && (
         <ErrorText>{errors.passwordConfirm.message}</ErrorText>
       )}
-      <Button
-        type="submit"
-        variant="outlined"
-        onClick={handleSubmit(onClickNext)}
-        disabled={!isValid}
-      >
+      <Button type="submit" variant="outlined" disabled={!isValid}>
         Next
       </Button>
     </Form>

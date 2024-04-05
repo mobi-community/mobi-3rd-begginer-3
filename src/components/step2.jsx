@@ -8,18 +8,17 @@ import {
   Form,
 } from "../libs/styled-components/displayStyle";
 import { step2Schema } from "../libs/yup/schema/step2";
+import useUpdateForm from "../hooks/useUpdateForm";
 
 const Step2 = ({ updateForm, next, prev }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(step2Schema),
-  });
+  const { register, handleSubmit, onSubmit, errors, isValid } = useUpdateForm(
+    updateForm,
+    step2Schema,
+    next,
+    prev
+  );
 
-  const onClickPrev = (data) => {
+  /* const onClickPrev = (data) => {
     updateForm(data);
     sessionStorage.getItem("prevFormData");
     prev();
@@ -30,10 +29,10 @@ const Step2 = ({ updateForm, next, prev }) => {
     sessionStorage.setItem("formData", JSON.stringify(data));
     next();
     console.log(data);
-  };
+  }; */
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <InputGroup>
         <InputTitle>핸드폰 번호</InputTitle>
         <TextField
@@ -64,16 +63,12 @@ const Step2 = ({ updateForm, next, prev }) => {
         <Button
           type="button"
           variant="outlined"
-          onClick={onClickPrev}
+          onClick={prev}
           sx={{ marginRight: "20px" }}
         >
           Prev
         </Button>
-        <Button
-          variant="outlined"
-          onClick={handleSubmit(onClickNext)}
-          disabled={!isValid}
-        >
+        <Button type="submit" variant="outlined" disabled={!isValid}>
           Next
         </Button>
       </InputGroup>
