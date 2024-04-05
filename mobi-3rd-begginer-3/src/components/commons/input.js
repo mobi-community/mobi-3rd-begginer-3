@@ -10,6 +10,7 @@ const Input = ({
     validate = {},
     titleText = "",
     errors = {},
+    value = {},
     ...rest
 }) => {
     return (

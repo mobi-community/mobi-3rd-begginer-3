@@ -4,8 +4,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../../components/commons/input";
 import * as yup from "yup";
 import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
 
 const IdPwForm = ({ updateForms, next, isLastStep }) => {
+    const [email, setEmail] = useState(sessionStorage.getItem("emailInput"));
+    const [password, setPassword] = useState(
+        sessionStorage.getItem("passwordInput")
+    );
+
+    useEffect(() => {
+        sessionStorage.setItem("emailInput", email);
+    }, [email]);
+    useEffect(() => {
+        sessionStorage.setItem("passwordInput", password);
+    }, [password]);
+
     const idpwSchema = yup.object().shape({
         email: schema.fields.email,
         password: schema.fields.password,
@@ -18,12 +31,16 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
     } = useForm({ mode: "onChange", resolver: yupResolver(idpwSchema) });
 
     const onSubmit = (data) => {
-        updateForms(data);
+        sessionStorage.setItem("emailInput", data.email);
+        sessionStorage.setItem("passwordInput", data.password);
+        next();
+        console.log(data);
+        // updateForms(data);
     };
 
     return (
         <>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="email">Email</label>
                 <Input
                     type={"text"}
@@ -32,6 +49,7 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
                     size="medium"
                     color="lemon"
                     errors={errors}
+                    value={email}
                 />
                 <label htmlFor="password">Password</label>
                 <Input
@@ -41,8 +59,10 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
                     size="medium"
                     color="lemon"
                     errors={errors}
+                    value={password}
                 />
-                <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button>
+                {/* <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button> */}
+                <Button type="submit">{isLastStep ? "Submit" : "Next"}</Button>
             </form>
         </>
     );
