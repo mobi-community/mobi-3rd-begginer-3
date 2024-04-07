@@ -19,6 +19,14 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
         sessionStorage.setItem("passwordInput", password);
     }, [password]);
 
+    useEffect(() => {
+        const userEmail = sessionStorage.getItem("emailInput");
+        const userPw = sessionStorage.getItem("passwordInput");
+        if (userEmail && userPw) {
+            setEmail(userEmail);
+            setPassword(userPw);
+        }
+    });
     const idpwSchema = yup.object().shape({
         email: schema.fields.email,
         password: schema.fields.password,
@@ -34,8 +42,9 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
         sessionStorage.setItem("emailInput", data.email);
         sessionStorage.setItem("passwordInput", data.password);
         next();
+        alert(data);
         console.log(data);
-        // updateForms(data);
+        updateForms(data);
     };
 
     return (
