@@ -6,11 +6,15 @@ import * as yup from "yup";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 
-const IdPwForm = ({ updateForms, next, isLastStep }) => {
+const IdPwForm = ({ next, isLastStep }) => {
     const [email, setEmail] = useState(sessionStorage.getItem("emailInput"));
     const [password, setPassword] = useState(
         sessionStorage.getItem("passwordInput")
     );
+    const idpwSchema = yup.object().shape({
+        email: schema.fields.email,
+        password: schema.fields.password,
+    });
 
     useEffect(() => {
         const userEmail = sessionStorage.getItem("emailInput");
@@ -21,12 +25,7 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
             setEmail(userEmail);
             setPassword(userPw);
         }
-    }, [email, password]);
-
-    const idpwSchema = yup.object().shape({
-        email: schema.fields.email,
-        password: schema.fields.password,
-    });
+    }, []);
 
     const {
         register,
@@ -40,7 +39,6 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
         sessionStorage.setItem("passwordInput", data.password);
         next();
         alert(JSON.stringify(data));
-        updateForms(data);
     };
 
     return (
@@ -66,7 +64,6 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
                     errors={errors}
                     value={password}
                 />
-                {/* <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button> */}
                 <Button type="submit">{isLastStep ? "Submit" : "Next"}</Button>
             </form>
         </>

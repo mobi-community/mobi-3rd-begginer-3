@@ -8,14 +8,25 @@ import { useEffect, useState } from "react";
 
 const PhoneBirthForm = ({ next, prev, isLastStep }) => {
     const [phone, setPhone] = useState(sessionStorage.getItem("phoneInput"));
-    const [birth, setBirth] = useState(sessionStorage.getItem("birthInput"));
+    const [birthday, setBirthday] = useState(
+        sessionStorage.getItem("birthInput")
+    );
 
     const phoneNumSchema = yup.object().shape({
         phone: schema.fields.phone,
         birthday: schema.fields.birthday,
     });
 
-    useEffect(() => {});
+    useEffect(() => {
+        const userPhone = sessionStorage.getItem("phoneInput");
+        const userBirth = sessionStorage.getItem("birthInput");
+        setValue("phone", userPhone);
+        setValue("birthday", userBirth);
+        if (userBirth && userPhone) {
+            setBirthday(userBirth);
+            setPhone(userPhone);
+        }
+    }, []);
 
     const {
         register,
@@ -24,9 +35,16 @@ const PhoneBirthForm = ({ next, prev, isLastStep }) => {
         formState: { errors },
     } = useForm({ mode: "onChange", resolver: yupResolver(phoneNumSchema) });
 
+    const onSubmit = (data) => {
+        sessionStorage.setItem("phoneInput", data.phone);
+        sessionStorage.setItem("birthInput", data.birthday);
+        next();
+        alert(JSON.stringify(data));
+        console.log(JSON.stringify(data));
+    };
     return (
         <>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="phone">PhoneNumber</label>
                 <Input
                     type={"text"}
@@ -35,6 +53,7 @@ const PhoneBirthForm = ({ next, prev, isLastStep }) => {
                     size="medium"
                     color="teal"
                     errors={errors}
+                    value={phone}
                 />
                 <label htmlFor="birthday">BirthDay</label>
                 <Input
@@ -44,9 +63,12 @@ const PhoneBirthForm = ({ next, prev, isLastStep }) => {
                     size="medium"
                     color="teal"
                     errors={errors}
+                    value={birthday}
                 />
-                <Button onClick={prev}>Prev</Button>
-                <Button onClick={next}>{isLastStep ? "Submit" : "Next"}</Button>
+                <Button onClick={prev} type="button">
+                    Prev
+                </Button>
+                <Button type="submit">{isLastStep ? "Submit" : "Next"}</Button>
             </form>
         </>
     );

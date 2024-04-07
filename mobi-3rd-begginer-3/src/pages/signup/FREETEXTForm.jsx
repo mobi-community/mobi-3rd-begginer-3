@@ -4,26 +4,42 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../../components/commons/input";
 import * as yup from "yup";
 import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
 
-const FREETXTForm = ({ updateForms, next, prev, isLastStep }) => {
+const FREETXTForm = ({ next, prev, isLastStep }) => {
+    const [freetext, setFreetext] = useState(
+        sessionStorage.getItem("textInput")
+    );
+
     const freetextSchema = yup.object().shape({
         freetext: schema.fields.freetext,
     });
 
+    useEffect(() => {
+        const userText = sessionStorage.getItem("textInput");
+        setValue("freetext", userText);
+        if (userText) {
+            setFreetext(userText);
+        }
+    }, []);
+
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm({ mode: "onChange", resolver: yupResolver(freetextSchema) });
 
     const onSubmit = (data) => {
-        updateForms(data);
+        sessionStorage.setItem("textInput", data.freetext);
+        next();
+        alert(JSON.stringify(data));
     };
 
     return (
         <>
             <div>
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <label htmlFor="freetext">FreeText</label>
                     <Input
                         type={"text"}
@@ -32,9 +48,12 @@ const FREETXTForm = ({ updateForms, next, prev, isLastStep }) => {
                         size="large"
                         color="green"
                         errors={errors}
+                        value={freetext}
                     />
-                    <Button onClick={prev}>Prev</Button>
-                    <Button onClick={next}>
+                    <Button onClick={prev} type="button">
+                        Prev
+                    </Button>
+                    <Button type="submit">
                         {isLastStep ? "Submit" : "Next"}
                     </Button>
                 </form>

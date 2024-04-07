@@ -6,10 +6,10 @@ import PhoneBirthForm from "./PHONE_BIRTHForm";
 
 const SignupPage = () => {
     const initialFormData = {
-        id: "",
+        email: "",
         password: "",
-        phoneNumber: "",
-        birth: "",
+        phone: "",
+        birthday: "",
         freetext: "",
     };
     const [formData, setFormData] = useState(initialFormData);
