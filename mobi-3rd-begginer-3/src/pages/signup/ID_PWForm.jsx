@@ -26,7 +26,7 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
             setEmail(userEmail);
             setPassword(userPw);
         }
-    });
+    }, [email, password]);
     const idpwSchema = yup.object().shape({
         email: schema.fields.email,
         password: schema.fields.password,
@@ -42,7 +42,7 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
         sessionStorage.setItem("emailInput", data.email);
         sessionStorage.setItem("passwordInput", data.password);
         next();
-        alert(data);
+        alert(JSON.stringify(data));
         console.log(data);
         updateForms(data);
     };
