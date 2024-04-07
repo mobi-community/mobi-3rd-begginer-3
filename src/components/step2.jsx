@@ -1,6 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, ButtonGroup, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Button, Input, TextField } from "@mui/material";
 import {
   InputGroup,
   InputTitle,
@@ -10,26 +8,13 @@ import {
 import { step2Schema } from "../libs/yup/schema/step2";
 import useUpdateForm from "../hooks/useUpdateForm";
 
-const Step2 = ({ updateForm, next, prev }) => {
+const Step2 = ({ formData, setFormData, next, prev }) => {
   const { register, handleSubmit, onSubmit, errors, isValid } = useUpdateForm(
-    updateForm,
+    formData,
     step2Schema,
     next,
     prev
   );
-
-  /* const onClickPrev = (data) => {
-    updateForm(data);
-    sessionStorage.getItem("prevFormData");
-    prev();
-    console.log(data);
-  };
-  const onClickNext = (data) => {
-    updateForm(data);
-    sessionStorage.setItem("formData", JSON.stringify(data));
-    next();
-    console.log(data);
-  }; */
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -41,6 +26,8 @@ const Step2 = ({ updateForm, next, prev }) => {
           id="phone"
           placeholder="010-0000-0000"
           size="small"
+          value={formData.phone}
+          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
           sx={{ width: "300px" }}
         />
       </InputGroup>
@@ -54,6 +41,8 @@ const Step2 = ({ updateForm, next, prev }) => {
           id="birth"
           placeholder="YYYY-MM-DD"
           size="small"
+          value={formData.birth}
+          onChange={(e) => setFormData({ ...formData, birth: e.target.value })}
           sx={{ width: "300px" }}
         />
       </InputGroup>

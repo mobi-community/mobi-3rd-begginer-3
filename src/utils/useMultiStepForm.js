@@ -24,8 +24,13 @@ const useMultiStepForm = (steps) => {
   }; */
 
   const next = () => {
-    setCurrentStepIndex((i) => (i >= steps.length - 1 ? i : i + 1));
-    setSearchParams({ step: step + 1 });
+    if (step >= 3) {
+      const sessionData = JSON.parse(sessionStorage.getItem("formData"));
+      alert(JSON.stringify(sessionData));
+    } else {
+      setCurrentStepIndex((i) => (i >= steps.length - 1 ? i : i + 1));
+      setSearchParams({ step: step + 1 });
+    }
   };
 
   const prev = () => {
@@ -37,8 +42,8 @@ const useMultiStepForm = (steps) => {
 
   return {
     currentStepIndex,
-    currentTitle: currentStep.title,
-    currentStep: currentStep.element,
+    currentTitle: currentStep ? currentStep.title : "",
+    currentStep: currentStep ? currentStep.element : null,
     prev,
     next,
     isFirstStep,

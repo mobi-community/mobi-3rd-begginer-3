@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-const useUpdateForm = (formData, schema, next) => {
+const useUpdateForm = (formData, schema, next, step) => {
   const {
     register,
     setValue,
@@ -27,6 +27,10 @@ const useUpdateForm = (formData, schema, next) => {
     // sessionStorage로 새롭게 string으로 갱신
     sessionStorage.setItem("formData", JSON.stringify(updateData));
     next(updateData);
+    if (step > 3) {
+      const sessionData = JSON.parse(sessionStorage.getItem("formData"));
+      alert(JSON.stringify(sessionData));
+    }
   };
 
   return { register, handleSubmit, onSubmit, errors, isValid };

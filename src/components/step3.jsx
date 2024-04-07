@@ -11,23 +11,13 @@ import styled from "styled-components";
 import { step3Schema } from "../libs/yup/schema/step3";
 import useUpdateForm from "../hooks/useUpdateForm";
 
-const Step3 = ({ setFormData, formData, updateForm, next, prev }) => {
+const Step3 = ({ formData, setFormData, next, prev, step }) => {
   const { register, handleSubmit, onSubmit, errors, isValid } = useUpdateForm(
-    updateForm,
+    formData,
     step3Schema,
-    next,
+    step > 3 ? null : next,
     prev
   );
-
-  const onClickSignUp = (form) => {
-    setFormData((prev) => ({ ...prev, ...form }));
-    sessionStorage.setItem(
-      "formData",
-      JSON.stringify({ ...formData, ...form })
-    );
-    const sessionData = JSON.parse(sessionStorage.getItem("formData"));
-    alert(JSON.stringify(sessionData));
-  };
 
   const [currentLength, setCurrentLength] = useState(0);
   const maxLength = 300;
@@ -43,7 +33,7 @@ const Step3 = ({ setFormData, formData, updateForm, next, prev }) => {
   };
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <InputGroup>
         <InputTitle>
           하고싶은 말
@@ -58,11 +48,13 @@ const Step3 = ({ setFormData, formData, updateForm, next, prev }) => {
           placeholder="하고싶은 말"
           multiline
           rows={15}
+          value={formData.message}
           onChange={(e) => {
             handleInputChange(e);
             if (e.target.value.length > maxLength) {
               e.target.value = e.target.value.slice(0, maxLength);
             }
+            setFormData({ ...formData, message: e.target.value });
           }}
           sx={{ width: "300px" }}
         />
@@ -78,12 +70,7 @@ const Step3 = ({ setFormData, formData, updateForm, next, prev }) => {
         >
           Prev
         </Button>
-        <Button
-          type="submit"
-          variant="outlined"
-          onClick={handleSubmit(onClickSignUp)}
-          disabled={!isValid}
-        >
+        <Button type="submit" variant="outlined" disabled={!isValid}>
           회원가입
         </Button>
       </ButtonGroup>
