@@ -13,20 +13,16 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
     );
 
     useEffect(() => {
-        sessionStorage.setItem("emailInput", email);
-    }, [email]);
-    useEffect(() => {
-        sessionStorage.setItem("passwordInput", password);
-    }, [password]);
-
-    useEffect(() => {
         const userEmail = sessionStorage.getItem("emailInput");
         const userPw = sessionStorage.getItem("passwordInput");
+        setValue("email", userEmail); // input에 있는 value 값 변경
+        setValue("password", userPw);
         if (userEmail && userPw) {
             setEmail(userEmail);
             setPassword(userPw);
         }
     }, [email, password]);
+
     const idpwSchema = yup.object().shape({
         email: schema.fields.email,
         password: schema.fields.password,
@@ -35,6 +31,7 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm({ mode: "onChange", resolver: yupResolver(idpwSchema) });
 
@@ -43,7 +40,6 @@ const IdPwForm = ({ updateForms, next, isLastStep }) => {
         sessionStorage.setItem("passwordInput", data.password);
         next();
         alert(JSON.stringify(data));
-        console.log(data);
         updateForms(data);
     };
 

@@ -4,16 +4,23 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "../../components/commons/yupValidation";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
 
 const PhoneBirthForm = ({ next, prev, isLastStep }) => {
+    const [phone, setPhone] = useState(sessionStorage.getItem("phoneInput"));
+    const [birth, setBirth] = useState(sessionStorage.getItem("birthInput"));
+
     const phoneNumSchema = yup.object().shape({
         phone: schema.fields.phone,
         birthday: schema.fields.birthday,
     });
 
+    useEffect(() => {});
+
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm({ mode: "onChange", resolver: yupResolver(phoneNumSchema) });
 
