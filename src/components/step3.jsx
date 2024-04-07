@@ -79,6 +79,7 @@ const Step3 = ({ setFormData, formData, updateForm, next, prev }) => {
           Prev
         </Button>
         <Button
+          type="submit"
           variant="outlined"
           onClick={handleSubmit(onClickSignUp)}
           disabled={!isValid}

@@ -19,11 +19,6 @@ const MultiStepSignUp = () => {
   const [nextStep, setNextStep] = useState(null);
   const [prevStep, setPrevStep] = useState(null);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [changeFormData, setChangeFormData] = useState({});
-
-  const step = Number(searchParams.get("step") || 1);
-
   useEffect(() => {
     // sessionStorage에서 formData라는 키의 값을 가져와서 userData로 저장
     const userData = sessionStorage.getItem("formData");
